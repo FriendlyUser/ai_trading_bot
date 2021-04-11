@@ -1,4 +1,17 @@
-# AI Based Trading System
+# Ai Trading System
+
+## Task List
+
+- [] Remove old references
+- [] discord module for logging. (4/11/2021)
+- [] Basic trading algorthmic, trade if forecast returns promising data
+- [] Various trading strategies that can be turned on and off
+
+## References
+
+- https://towardsdatascience.com/how-to-create-a-fully-automated-ai-based-trading-system-with-python-708503c1a907
+
+## AI Based Trading System
 
 This code works as a boilerplate for an AI based trading system with yfinance as data source and RobinHood or Alpaca as brokers. DO NOT USE IT FOR TRADING AS IT IS. Follow [the tutorial in Medium.](https://towardsdatascience.com/how-to-create-a-fully-automated-ai-based-trading-system-with-python-708503c1a907)
 

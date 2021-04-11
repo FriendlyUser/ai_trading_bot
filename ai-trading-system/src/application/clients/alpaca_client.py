@@ -1,6 +1,5 @@
 import alpaca_trade_api as alpaca
 
-
 class AlpacaClient:
     def __init__(self, logger, config):
         self._config = config

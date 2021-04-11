@@ -20,5 +20,11 @@ class TradingSystem:
             await asyncio.sleep(seconds)
 
         while True:
-            self._alpaca_repository.is_market_open()
+            self._logger.info("Running main logic")
+            market_open = self._alpaca_repository.is_market_open()
+            if market_open:
+                # run some main logic here
+                self._logger.info("Main loop goes here")
+            else: 
+                self._logger.info("MARKET IS CLOSED")
             await asyncio.sleep(seconds)

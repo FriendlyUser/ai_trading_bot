@@ -11,13 +11,8 @@ LOG_CONFIG = {
 }
 
 POLLING_CONFIG = {
-    'yahoo_interval': 3000,
-}
-
-ROBINHOOD_CONFIG = {
-    'mail': os.environ['RH_USER_EMAIL'],
-    'password': os.environ['RH_PASSWORD'],
-    'mfa': os.environ['RH_MFA_CODE']
+    # 'yahoo_interval': 3000,
+    'yahoo_interval': 60,
 }
 
 ALPACA_CONFIG = {
@@ -26,3 +21,5 @@ ALPACA_CONFIG = {
     # Change to https://api.alpaca.markets for live
     'base_url': 'https://paper-api.alpaca.markets'
 }
+
+DISCORD_WEBHOOK = os.environ["DISCORD_TRADING_WEBHOOK"]

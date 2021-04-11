@@ -1,6 +1,6 @@
 import logging
-
-
+from application.utils.discord_logger import Discord_Handler
+from config.config import DISCORD_WEBHOOK
 class LoggerClient:
 
     _config = None
@@ -15,4 +15,6 @@ class LoggerClient:
         formatter = logging.Formatter(self._config['format'])
         log_handler.setFormatter(formatter)
         logger.addHandler(log_handler)
+        discord_handler = Discord_Handler(DISCORD_WEBHOOK)
+        logger.addHandler(discord_handler)
         return logger
