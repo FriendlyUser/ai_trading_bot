@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 from statsmodels.tsa.arima.model import ARIMA
-
+from application.utils.loop_count import reset_loop_count
 
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
@@ -18,13 +18,20 @@ class TradingSystem:
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
             await asyncio.sleep(seconds)
-
+        # load stocks from list
+        stocks = ["^GSPC"]
         while True:
             self._logger.info("Running main logic")
             market_open = self._alpaca_repository.is_market_open()
-            if market_open:
+            if market_open == False:
                 # run some main logic here
                 self._logger.info("Main loop goes here")
+                # scanning S&P 500
+                for stock in stocks:
+                    data = self._yahoo_repository.get_finance_data(stock)
+                    result, forecast = self._ai_repository.get_forecast(data)
+                    print(forecast)
             else: 
-                self._logger.info("MARKET IS CLOSED")
+                pass
+            reset_loop_count()
             await asyncio.sleep(seconds)

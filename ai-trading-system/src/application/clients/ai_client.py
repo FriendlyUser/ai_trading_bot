@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
-
 from statsmodels.tsa.arima.model import ARIMA
-
 
 class AIClient:
     def __init__(self, logger, config):

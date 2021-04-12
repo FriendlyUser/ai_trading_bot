@@ -1,3 +1,4 @@
+# simple forecast functions
 class AIRepository:
     def __init__(self, logger, config, ai_client):
         self._config = config
