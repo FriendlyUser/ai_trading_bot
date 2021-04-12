@@ -22,3 +22,5 @@ __pycache__
 # Serverless directories
 .serverless
 .venv
+
+set_env.sh

@@ -5,7 +5,6 @@ import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
 
 import pyotp
-import robin_stocks as robinhood
 import alpaca_trade_api as alpaca
 
 import telegram
@@ -50,28 +49,6 @@ def get_forecast():
 
     # Returning the last real data and the forecast for the next minute
     return (y[len(y)-1], forecast)
-
-
-def trade_robinhood():
-    timed_otp = pyotp.TOTP(RH_MFA_CODE).now()
-    login = rh.login(RH_USER_EMAIL, RH_PASSWORD, mfa_code=timed_otp)
-
-    last_real_data, forecast = get_forecast()
-
-    # Your code to decide if you want to buy or sell 
-    # (and the number of shares) goes here
-    action = 'BUY' # or 'SELL', or 'HOLD', or...
-    shares = 1
-
-    if action == 'BUY':
-        rh.order_buy_market('GOOG', shares)
-        return f'Bought {shares} shares.'
-    elif action == 'SELL':
-        rh.order_sell_market('GOOG', shares)
-        return f'Sold {shares} shares.'
-    else:
-        return f'No shares were bought nor sold.'
-
 
 def trade_alpaca():
     api = alpaca.REST(ALPACA_KEY_ID, ALPACA_SECRET_KEY, base_url=BASE_URL)
