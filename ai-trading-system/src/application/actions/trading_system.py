@@ -30,7 +30,8 @@ class TradingSystem:
                 for stock in stocks:
                     data = self._yahoo_repository.get_finance_data(stock)
                     result, forecast = self._ai_repository.get_forecast(data)
-                    print(forecast)
+                    if (abs(forecast - result) > 0.1):
+                        self._logger.info("S&P less than 0.05, preform trade")
             else: 
                 pass
             reset_loop_count()

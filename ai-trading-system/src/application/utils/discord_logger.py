@@ -30,7 +30,6 @@ class Discord_Handler(Handler):
             url = self.url
             data = self.mapLogRecord(record)
             #can't do anything with the result
-            print("TEST THIS HERE")
             if len(msg) > 1900:
                 msg_list = [msg[i: i+1900] for i in range(0, len(msg), 1900)]
                 for i in msg_list:
