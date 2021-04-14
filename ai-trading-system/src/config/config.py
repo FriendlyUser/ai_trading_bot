@@ -1,7 +1,7 @@
 import logging
 import os
 import sys
-
+import random
 
 LOG_CONFIG = {
     'name': 'ai-trading-bridge',
@@ -23,3 +23,5 @@ ALPACA_CONFIG = {
 }
 
 DISCORD_WEBHOOK = os.environ["DISCORD_TRADING_WEBHOOK"]
+
+PORT = random.randint(2000, 9000)

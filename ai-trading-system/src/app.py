@@ -9,7 +9,7 @@ from application.repositories.yahoo_repository import YahooRepository
 from application.repositories.alpaca_repository import AlpacaRepository
 from application.repositories.ai_repository import AIRepository
 from application.actions.trading_system import TradingSystem
-
+from server import app
 from config import config
 
 
@@ -31,9 +31,9 @@ class Container:
     async def start_monitoring(self):
         await self._trading_system.monitoring(config.POLLING_CONFIG['yahoo_interval'], exec_on_start=True)
 
-
 if __name__ == '__main__':
     container = Container()
     loop = asyncio.get_event_loop()
+    app.run()
     asyncio.ensure_future(container.start_monitoring(), loop=loop)
     loop.run_forever()
