@@ -13,6 +13,7 @@ telegram = "^0.0.1"
 yfinance = "^0.1.59"
 alpaca-trade-api = "^1.1.0"
 pandas = "^1.2.3"
+flask = "^1.1.2"
 
 [tool.poetry.dev-dependencies]
 

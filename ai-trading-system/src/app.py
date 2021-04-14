@@ -33,7 +33,7 @@ class Container:
 
 if __name__ == '__main__':
     container = Container()
-    loop = asyncio.get_event_loop()
-    app.run()
+    loop = asyncio.get_event_loop()  
+    app.run(host='0.0.0.0', port=8080)
     asyncio.ensure_future(container.start_monitoring(), loop=loop)
     loop.run_forever()
