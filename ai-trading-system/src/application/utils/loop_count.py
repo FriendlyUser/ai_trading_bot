@@ -1,4 +1,3 @@
-
 loop_count = 0
 
 def get_loop_count():
@@ -15,3 +14,5 @@ def set_loop_count(new_value):
 def reset_loop_count():
     global loop_count
     loop_count = 0
+
+

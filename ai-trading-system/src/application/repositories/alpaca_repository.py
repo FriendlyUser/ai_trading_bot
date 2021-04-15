@@ -5,4 +5,5 @@ class AlpacaRepository:
         self._alpaca_client = alpaca_client
 
     def is_market_open(self):
+        self._logger.debug("checking if market is open")
         return self._alpaca_client.is_market_open()
