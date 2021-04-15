@@ -17,6 +17,7 @@ class Discord_Handler(Handler):
     def emit(self, record):
         self.emitting(record)
 
+    # TODO add logic to add data to queue 
     def emitting(self, record):
         loop_count = get_loop_count()
         delay = loop_count * 2
