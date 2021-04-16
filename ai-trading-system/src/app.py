@@ -12,13 +12,13 @@ from application.actions.trading_system import TradingSystem
 from threading import Timer
 from server import app
 from config import config
-
+from application import __version__
 
 class Container:
 
     def __init__(self):
         self._logger = LoggerClient(config).get_logger()
-        self._logger.info("AI trading system starting...")
+        self._logger.info("AI trading system starting...", extra={"version": __version__})
 
         self._yahoo_client = YahooClient(self._logger, config)
         self._yahoo_repository = YahooRepository(self._logger, config, self._yahoo_client)
@@ -34,6 +34,7 @@ class Container:
 
 def start_app():
       app.run(host='0.0.0.0', port=8080)
+
 if __name__ == '__main__':
     container = Container()
     loop = asyncio.get_event_loop()

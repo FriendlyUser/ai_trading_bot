@@ -4,9 +4,9 @@
 
 from setuptools import setup, find_packages
 setup(
-    name='Winteam Bridge',
+    name='Grandfleet trading',
     version='1.0.0',
-    description='Brosnan\'s winteam bridge',
+    description='Grandfleet\'s trading bot',
     packages=find_packages(exclude=['*tests']),
     include_package_data=True,
     setup_requires=[
