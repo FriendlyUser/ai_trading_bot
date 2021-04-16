@@ -22,6 +22,7 @@ class TradingSystem:
         stocks = ["^GSPC"]
         while True:
             self._logger.info("Running main logic")
+            self._logger.buy("Trying to buy stocks")
             market_open = self._alpaca_repository.is_market_open()
             if market_open:
                 # run some main logic here
