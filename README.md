@@ -8,6 +8,11 @@
 - [] Various trading strategies that can be turned on and off
 
 Deployed to `repl.it`@ https://aitradingbot.friendlyuser.repl.co
+
+```
+python3.8 ai-trading-system/src/app.py
+```
+
 ## References
 
 Adding more content here

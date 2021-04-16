@@ -45,7 +45,7 @@ def map_record_to_embed(record: logging.LogRecord):
   }
   fields = []
   # map args to field
-  if record.args:
+  if type(record.args) == dict:
     for name, value in record.args.items():
       field = {
         "name": name,
