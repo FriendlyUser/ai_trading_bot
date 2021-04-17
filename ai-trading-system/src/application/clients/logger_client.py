@@ -2,6 +2,7 @@ import logging
 from application.utils.discord_logger import Discord_Handler
 from config.config import DISCORD_WEBHOOK
 
+
 class LoggerClient:
 
     _config = None
@@ -9,9 +10,9 @@ class LoggerClient:
     def __init__(self, config):
         self._config = config.LOG_CONFIG
         # TODO add custom logging
-        self.addLoggingLevel("buy", 10)
-        self.addLoggingLevel("sell", 11)
-        self.addLoggingLevel("alert", 12)
+        addLoggingLevel("BUY", 70)
+        addLoggingLevel("SELL", 80)
+        addLoggingLevel("ALERT", 90)
 
     def get_logger(self):
         logger = logging.getLogger(self._config['name'])
@@ -24,7 +25,7 @@ class LoggerClient:
         logger.addHandler(discord_handler)
         return logger
 
-    def addLoggingLevel(levelName, levelNum, methodName=None):
+def addLoggingLevel(levelName, levelNum, methodName=None):
         """
         Comprehensively adds a new logging level to the `logging` module and the
         currently configured logging class.
@@ -51,7 +52,6 @@ class LoggerClient:
         """
         if not methodName:
             methodName = levelName.lower()
-
         if hasattr(logging, levelName):
             raise AttributeError('{} already defined in logging module'.format(levelName))
         if hasattr(logging, methodName):

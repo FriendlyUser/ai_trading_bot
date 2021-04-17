@@ -98,4 +98,5 @@ def map_log_level_to_color(level: str):
         "SELL": "11737883",
         "ALERT": "99BADD",
     }
+  print(level)
   return switcher.get(level, "11119017")
