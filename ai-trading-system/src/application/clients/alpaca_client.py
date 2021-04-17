@@ -12,11 +12,11 @@ class AlpacaClient:
         self._api = alpaca.REST(self._key_id, self._secret_key, base_url=self._base_url)
 
     def get_account_info(self):
-        account = self._api.get_account()
+        acc = self._api.get_account()
         print(
             f'The buying power is {acc.buying_power} {acc.currency} '
             f'and the equity is {acc.equity} {acc.currency}\n'
-            f'The account status is {account.status}'
+            f'The account status is {acc.status}'
         )
 
     def is_market_open(self):
@@ -44,7 +44,7 @@ class AlpacaClient:
     def trade_alpaca(self, last_real_data, forecast):
         api = alpaca.REST(self._key_id, self._secret_key, base_url=self._base_url)
 
-        last_real_data, forecast = get_forecast()
+        # last_real_data, forecast = get_forecast()
 
         # Your code to decide if you want to buy or sell 
         # (and the number of shares) goes here

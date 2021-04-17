@@ -45,7 +45,7 @@ def map_record_to_embed(record: logging.LogRecord):
   }
   fields = []
   # map args to field
-  if record.args:
+  if type(record.args) == dict:
     for name, value in record.args.items():
       field = {
         "name": name,
@@ -93,6 +93,10 @@ def map_log_level_to_color(level: str):
         'INFO': "29647",
         "WARNING": "16774656",
         "ERROR": "7350627",
-        "CRITICAL": "14876706"
+        "CRITICAL": "14876706",
+        "BUY": "52377",
+        "SELL": "11737883",
+        "ALERT": "99BADD",
     }
+  print(level)
   return switcher.get(level, "11119017")
