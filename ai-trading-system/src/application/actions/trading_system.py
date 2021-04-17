@@ -25,9 +25,11 @@ class TradingSystem:
         while True:
             self._logger.info("Running main logic")
             self._logger.buy("Trying to buy stocks")
-            self.handle_trading()
+            await self.handle_trading()
             await asyncio.sleep(seconds)
 
+    # its fine if decorators dont log to discord
+    # right now they only perform timing and tracking
     @Timer
     async def handle_trading(self):
         market_open = self._alpaca_repository.is_market_open()

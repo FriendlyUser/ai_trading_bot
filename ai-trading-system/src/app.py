@@ -3,7 +3,6 @@ import asyncio
 from application.clients.logger_client import LoggerClient
 from application.clients.yahoo_client import YahooClient
 from application.clients.alpaca_client import AlpacaClient
-from application.clients.robinhood_client import RobinHoodClient
 from application.clients.ai_client import AIClient
 from application.repositories.yahoo_repository import YahooRepository
 from application.repositories.alpaca_repository import AlpacaRepository
@@ -35,6 +34,7 @@ class Container:
 
 def start_app():
       app.run(host='0.0.0.0', port=8080)
+
 if __name__ == '__main__':
     container = Container()
     loop = asyncio.get_event_loop()

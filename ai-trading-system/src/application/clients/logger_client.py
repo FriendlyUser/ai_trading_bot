@@ -9,11 +9,11 @@ class LoggerClient:
 
     def __init__(self, config):
         self._config = config.LOG_CONFIG
-        # TODO add custom logging
         addLoggingLevel("BUY", 70)
         addLoggingLevel("SELL", 80)
         addLoggingLevel("ALERT", 90)
 
+    # TODO consider renaming to mk_logger
     def get_logger(self):
         logger = logging.getLogger(self._config['name'])
         logger.setLevel(self._config['level'])

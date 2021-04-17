@@ -1,5 +1,9 @@
 from time import time
-class Timer:
+#/usr/bin/env python3
+from functools import wraps
+from application.utils.util import getLogger
+
+class TimerOld:
     def __init__(self, func):
         self.function = func
   
@@ -9,6 +13,15 @@ class Timer:
         end_time = time()
         print("Execution took {} seconds".format(end_time-start_time))
         return result
+
+
+def Timer(method):
+    @wraps(method)
+    async def _impl(self, *method_args, **method_kwargs):
+        start_time = time()
+        method_output = await method(self, *method_args, **method_kwargs)
+        end_time = time()
+    return _impl
 
 class CheckMarketOpen:
     def __init__(self, func):
