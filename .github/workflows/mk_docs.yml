@@ -1,8 +1,9 @@
 name: Deploy docs
 on:
   push:
-    - master
-    - main
+    branches:
+      - master
+      - main
 
 env:
   DISCORD_TRADING_WEBHOOK: blank
