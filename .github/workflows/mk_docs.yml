@@ -1,0 +1,47 @@
+name: Deploy docs
+on:
+  push:
+    - master
+    - main
+
+env:
+  DISCORD_TRADING_WEBHOOK: blank
+  ALPACA_SECRET_KEY: blank
+  ALPACA_KEY_ID: blank
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - uses: actions/cache@v2
+        name: Set up caches
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 3
+
+      - name: Install dependencies
+        run: |
+          pip install -r ai-trading-system/requirements.txt
+          pip install -r pydoc3
+      - name: Build docs
+        run: |
+          cd ai-trading-system/src
+          pdoc --html .
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ai-trading-system/src/html # The folder the action should deploy.
