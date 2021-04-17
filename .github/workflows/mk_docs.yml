@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r ai-trading-system/requirements.txt
-          pip install -r pydoc3
+          pip install -r pdoc3
       - name: Build docs
         run: |
           cd ai-trading-system/src
