@@ -1,5 +1,10 @@
 # Ai Trading System
 
+To run
+```
+python3.8 ai-trading-system/src/app.py
+```
+
 Discord is intended to contain all messages produced by the bot.
 
 The standard way to log a message is, within a repository
@@ -25,10 +30,6 @@ self._logger.info("AI trading system starting...", {"version": __version__})
 - [] Various trading strategies that can be turned on and off
 
 Deployed to `repl.it`@ https://aitradingbot.friendlyuser.repl.co
-
-```
-python3.8 ai-trading-system/src/app.py
-```
 
 ## References
 

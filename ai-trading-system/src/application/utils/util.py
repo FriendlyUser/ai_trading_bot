@@ -7,8 +7,3 @@ from config import config
 def reset():
   reset_loop_count()
   reset_and_send_list()
-
-def getLogger():
-  log_config = config.LOG_CONFIG
-  logger = logging.getLogger(log_config['name'])
-  return LoggerClient.setup_logger(log_config, logger)

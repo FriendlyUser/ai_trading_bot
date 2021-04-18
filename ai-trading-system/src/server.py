@@ -7,4 +7,5 @@ log.disabled = True
 
 @app.route('/')
 def index():
+  """simple index page"""
   return render_template("index.html")

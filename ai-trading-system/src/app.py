@@ -15,7 +15,7 @@ from config import config
 
 
 class Container:
-
+    """Has access to all repositories and logger"""
     def __init__(self):
         self._logger = LoggerClient(config).get_logger()
         self._logger.info("AI trading system starting...", {"version": __version__})
@@ -30,10 +30,12 @@ class Container:
             self._logger, config, self._yahoo_repository, self._ai_repository, self._alpaca_repository)
 
     async def start_monitoring(self):
+        """Main loop to monitor stock market"""
         await self._trading_system.monitoring(config.POLLING_CONFIG['yahoo_interval'], exec_on_start=True)
 
 def start_app():
-      app.run(host='0.0.0.0', port=8080)
+    """start server app"""
+    app.run(host='0.0.0.0', port=8080)
 
 if __name__ == '__main__':
     container = Container()

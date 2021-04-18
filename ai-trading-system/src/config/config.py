@@ -22,6 +22,10 @@ ALPACA_CONFIG = {
     'base_url': 'https://paper-api.alpaca.markets'
 }
 
+
+TRADING_CONFIG = {
+    'DEBUG': True
+}
 DISCORD_WEBHOOK = os.environ["DISCORD_TRADING_WEBHOOK"]
 
 PORT = random.randint(2000, 9000)
