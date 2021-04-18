@@ -29,10 +29,11 @@
 <pre><code class="python">#/usr/bin/env python3
 #
 from time import time
+from application.utils.util import prettify_time
 from functools import wraps
 
 def Timer(func):
-    &#34;&#34;&#34; Times 
+    &#34;&#34;&#34; Time execution time
     &#34;&#34;&#34;
     def _decorator(self, *args, **kwargs):
         # access a from TestSample
@@ -40,18 +41,12 @@ def Timer(func):
         result = func(self, *args, **kwargs)
         end_time = time()
         # util function to map seconds to nice format
-        self._logger.buy(&#34;Execution took {} seconds&#34;.format(end_time-start_time))
+        nice_time = prettify_time(end_time-start_time)
+        msg = f&#34;Execution of {func.__name__}took {nice_time}&#34;
+        self._logger.buy(msg)
         return result
     return _decorator
 
-
-# def Timer(method):
-#     @wraps(method)
-#     async def _impl(self, *method_args, **method_kwargs):
-#         start_time = time()
-#         method_output = await method(self, *method_args, **method_kwargs)
-#         end_time = time()
-#     return _impl
 
 def RunIfMarketOpen(func):
     async def _decorator(self, *args, **kwargs):
@@ -107,13 +102,13 @@ def RunIfMarketOpen(func):
 <span>def <span class="ident">Timer</span></span>(<span>func)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Times</p></div>
+<div class="desc"><p>Time execution time</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def Timer(func):
-    &#34;&#34;&#34; Times 
+    &#34;&#34;&#34; Time execution time
     &#34;&#34;&#34;
     def _decorator(self, *args, **kwargs):
         # access a from TestSample
@@ -121,7 +116,9 @@ def RunIfMarketOpen(func):
         result = func(self, *args, **kwargs)
         end_time = time()
         # util function to map seconds to nice format
-        self._logger.buy(&#34;Execution took {} seconds&#34;.format(end_time-start_time))
+        nice_time = prettify_time(end_time-start_time)
+        msg = f&#34;Execution of {func.__name__}took {nice_time}&#34;
+        self._logger.buy(msg)
         return result
     return _decorator</code></pre>
 </details>
