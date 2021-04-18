@@ -7,13 +7,13 @@ class YahooClient:
         self._config = config
         self._logger = logger
 
-    def get_finance_data(self, stock="^GSPC"):
+    def get_finance_data(self, stock="^GSPC", period='5d', interval="1m"):
+        """Get data from yahoo finance for a particular ticker"""
         self._logger.info('Getting data from Yahoo Finance...')
 
-        google = yf.Ticker(stock)        
-        df = google.history(period='5d', interval="1m")[['Low']]
+        ticker = yf.Ticker(stock)
+        df = ticker.history(period=period, interval=interval)[['Low']]
         self._logger.info(f'Data found. Last value dated on {df.index[-1]}')
         df['date'] = pd.to_datetime(df.index).time
         df.set_index('date', inplace=True)
-
         return df

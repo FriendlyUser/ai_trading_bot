@@ -34,6 +34,7 @@ class TradingSystem:
     @Timer
     async def handle_trading(self):
         # scanning S&P 500
+        # change configuration to run different analysis based on config    
         for stock in self._stocks:
             data = self._yahoo_repository.get_finance_data(stock)
             result, forecast = self._ai_repository.get_forecast(data)
