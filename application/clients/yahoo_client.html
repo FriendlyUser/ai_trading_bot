@@ -35,15 +35,15 @@ class YahooClient:
         self._config = config
         self._logger = logger
 
-    def get_finance_data(self, stock=&#34;^GSPC&#34;):
+    def get_finance_data(self, stock=&#34;^GSPC&#34;, period=&#39;5d&#39;, interval=&#34;1m&#34;):
+        &#34;&#34;&#34;Get data from yahoo finance for a particular ticker&#34;&#34;&#34;
         self._logger.info(&#39;Getting data from Yahoo Finance...&#39;)
 
-        google = yf.Ticker(stock)        
-        df = google.history(period=&#39;5d&#39;, interval=&#34;1m&#34;)[[&#39;Low&#39;]]
+        ticker = yf.Ticker(stock)
+        df = ticker.history(period=period, interval=interval)[[&#39;Low&#39;]]
         self._logger.info(f&#39;Data found. Last value dated on {df.index[-1]}&#39;)
         df[&#39;date&#39;] = pd.to_datetime(df.index).time
         df.set_index(&#39;date&#39;, inplace=True)
-
         return df</code></pre>
 </details>
 </section>
@@ -71,37 +71,37 @@ class YahooClient:
         self._config = config
         self._logger = logger
 
-    def get_finance_data(self, stock=&#34;^GSPC&#34;):
+    def get_finance_data(self, stock=&#34;^GSPC&#34;, period=&#39;5d&#39;, interval=&#34;1m&#34;):
+        &#34;&#34;&#34;Get data from yahoo finance for a particular ticker&#34;&#34;&#34;
         self._logger.info(&#39;Getting data from Yahoo Finance...&#39;)
 
-        google = yf.Ticker(stock)        
-        df = google.history(period=&#39;5d&#39;, interval=&#34;1m&#34;)[[&#39;Low&#39;]]
+        ticker = yf.Ticker(stock)
+        df = ticker.history(period=period, interval=interval)[[&#39;Low&#39;]]
         self._logger.info(f&#39;Data found. Last value dated on {df.index[-1]}&#39;)
         df[&#39;date&#39;] = pd.to_datetime(df.index).time
         df.set_index(&#39;date&#39;, inplace=True)
-
         return df</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.application.clients.yahoo_client.YahooClient.get_finance_data"><code class="name flex">
-<span>def <span class="ident">get_finance_data</span></span>(<span>self, stock='^GSPC')</span>
+<span>def <span class="ident">get_finance_data</span></span>(<span>self, stock='^GSPC', period='5d', interval='1m')</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Get data from yahoo finance for a particular ticker</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_finance_data(self, stock=&#34;^GSPC&#34;):
+<pre><code class="python">def get_finance_data(self, stock=&#34;^GSPC&#34;, period=&#39;5d&#39;, interval=&#34;1m&#34;):
+    &#34;&#34;&#34;Get data from yahoo finance for a particular ticker&#34;&#34;&#34;
     self._logger.info(&#39;Getting data from Yahoo Finance...&#39;)
 
-    google = yf.Ticker(stock)        
-    df = google.history(period=&#39;5d&#39;, interval=&#34;1m&#34;)[[&#39;Low&#39;]]
+    ticker = yf.Ticker(stock)
+    df = ticker.history(period=period, interval=interval)[[&#39;Low&#39;]]
     self._logger.info(f&#39;Data found. Last value dated on {df.index[-1]}&#39;)
     df[&#39;date&#39;] = pd.to_datetime(df.index).time
     df.set_index(&#39;date&#39;, inplace=True)
-
     return df</code></pre>
 </details>
 </dd>

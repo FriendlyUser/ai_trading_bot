@@ -42,8 +42,8 @@ def Timer(func):
         end_time = time()
         # util function to map seconds to nice format
         nice_time = prettify_time(end_time-start_time)
-        msg = f&#34;Execution of {func.__name__}took {nice_time}&#34;
-        self._logger.buy(msg)
+        msg = f&#34;Execution of {func.__name__} took {nice_time}&#34;
+        self._logger.debug(msg)
         return result
     return _decorator
 
@@ -59,6 +59,7 @@ def RunIfMarketOpen(func):
             return result
         else:
             self._logger.debug(&#34;Market closed&#34;)
+            # return empty function
             def fun(): 
                 pass
             return fun
@@ -92,6 +93,7 @@ def RunIfMarketOpen(func):
             return result
         else:
             self._logger.debug(&#34;Market closed&#34;)
+            # return empty function
             def fun(): 
                 pass
             return fun
@@ -117,8 +119,8 @@ def RunIfMarketOpen(func):
         end_time = time()
         # util function to map seconds to nice format
         nice_time = prettify_time(end_time-start_time)
-        msg = f&#34;Execution of {func.__name__}took {nice_time}&#34;
-        self._logger.buy(msg)
+        msg = f&#34;Execution of {func.__name__} took {nice_time}&#34;
+        self._logger.debug(msg)
         return result
     return _decorator</code></pre>
 </details>
