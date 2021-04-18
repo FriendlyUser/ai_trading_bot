@@ -12,7 +12,7 @@ from application import __version__
 from threading import Timer
 from server import app
 from config import config
-
+from application import __version__
 
 class Container:
     """Has access to all repositories and logger"""

@@ -1,8 +1,9 @@
 name: Deploy docs
 on:
   push:
-    - master
-    - main
+    branches:
+      - master
+      - main
 
 env:
   DISCORD_TRADING_WEBHOOK: blank
@@ -34,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r ai-trading-system/requirements.txt
-          pip install -r pydoc3
+          pip install pdoc3
       - name: Build docs
         run: |
           cd ai-trading-system/src
@@ -44,4 +45,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: ai-trading-system/src/html # The folder the action should deploy.
+          folder: ai-trading-system/src/html/src # The folder the action should deploy.
