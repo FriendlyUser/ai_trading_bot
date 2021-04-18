@@ -26,40 +26,48 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from time import time
-#/usr/bin/env python3
+<pre><code class="python">#/usr/bin/env python3
+#
+from time import time
 from functools import wraps
-from application.utils.util import getLogger
 
-class TimerOld:
-    def __init__(self, func):
-        self.function = func
-  
-    def __call__(self, *args, **kwargs):
+def Timer(func):
+    &#34;&#34;&#34; Times 
+    &#34;&#34;&#34;
+    def _decorator(self, *args, **kwargs):
+        # access a from TestSample
         start_time = time()
-        result = self.function(*args, **kwargs)
+        result = func(self, *args, **kwargs)
         end_time = time()
-        print(&#34;Execution took {} seconds&#34;.format(end_time-start_time))
+        # util function to map seconds to nice format
+        self._logger.buy(&#34;Execution took {} seconds&#34;.format(end_time-start_time))
         return result
+    return _decorator
 
 
-def Timer(method):
-    @wraps(method)
-    async def _impl(self, *method_args, **method_kwargs):
-        start_time = time()
-        method_output = await method(self, *method_args, **method_kwargs)
-        end_time = time()
-    return _impl
+# def Timer(method):
+#     @wraps(method)
+#     async def _impl(self, *method_args, **method_kwargs):
+#         start_time = time()
+#         method_output = await method(self, *method_args, **method_kwargs)
+#         end_time = time()
+#     return _impl
 
-class CheckMarketOpen:
-    def __init__(self, func):
-        self.function = func
-  
-    def __call__(self, *args, **kwargs):
-        parent_obj = args[0]
-        market_open = parent_obj._alpaca_repository.is_market_open()
-        print(market_open)
-        return market_open</code></pre>
+def RunIfMarketOpen(func):
+    async def _decorator(self, *args, **kwargs):
+        # access a from TestSample
+        market_open = self._alpaca_repository.is_market_open()
+        trading_cfg = self._config.TRADING_CONFIG
+        if market_open or trading_cfg.get(&#39;DEBUG&#39;, False):
+            self._logger.buy(&#34;Market open&#34;)
+            result = await func(self, *args, **kwargs)
+            return result
+        else:
+            self._logger.debug(&#34;Market closed&#34;)
+            def fun(): 
+                pass
+            return fun
+    return _decorator</code></pre>
 </details>
 </section>
 <section>
@@ -69,8 +77,8 @@ class CheckMarketOpen:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="src.application.decorators.trading.Timer"><code class="name flex">
-<span>def <span class="ident">Timer</span></span>(<span>method)</span>
+<dt id="src.application.decorators.trading.RunIfMarketOpen"><code class="name flex">
+<span>def <span class="ident">RunIfMarketOpen</span></span>(<span>func)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -78,64 +86,49 @@ class CheckMarketOpen:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def Timer(method):
-    @wraps(method)
-    async def _impl(self, *method_args, **method_kwargs):
+<pre><code class="python">def RunIfMarketOpen(func):
+    async def _decorator(self, *args, **kwargs):
+        # access a from TestSample
+        market_open = self._alpaca_repository.is_market_open()
+        trading_cfg = self._config.TRADING_CONFIG
+        if market_open or trading_cfg.get(&#39;DEBUG&#39;, False):
+            self._logger.buy(&#34;Market open&#34;)
+            result = await func(self, *args, **kwargs)
+            return result
+        else:
+            self._logger.debug(&#34;Market closed&#34;)
+            def fun(): 
+                pass
+            return fun
+    return _decorator</code></pre>
+</details>
+</dd>
+<dt id="src.application.decorators.trading.Timer"><code class="name flex">
+<span>def <span class="ident">Timer</span></span>(<span>func)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Times</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Timer(func):
+    &#34;&#34;&#34; Times 
+    &#34;&#34;&#34;
+    def _decorator(self, *args, **kwargs):
+        # access a from TestSample
         start_time = time()
-        method_output = await method(self, *method_args, **method_kwargs)
+        result = func(self, *args, **kwargs)
         end_time = time()
-    return _impl</code></pre>
+        # util function to map seconds to nice format
+        self._logger.buy(&#34;Execution took {} seconds&#34;.format(end_time-start_time))
+        return result
+    return _decorator</code></pre>
 </details>
 </dd>
 </dl>
 </section>
 <section>
-<h2 class="section-title" id="header-classes">Classes</h2>
-<dl>
-<dt id="src.application.decorators.trading.CheckMarketOpen"><code class="flex name class">
-<span>class <span class="ident">CheckMarketOpen</span></span>
-<span>(</span><span>func)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class CheckMarketOpen:
-    def __init__(self, func):
-        self.function = func
-  
-    def __call__(self, *args, **kwargs):
-        parent_obj = args[0]
-        market_open = parent_obj._alpaca_repository.is_market_open()
-        print(market_open)
-        return market_open</code></pre>
-</details>
-</dd>
-<dt id="src.application.decorators.trading.TimerOld"><code class="flex name class">
-<span>class <span class="ident">TimerOld</span></span>
-<span>(</span><span>func)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class TimerOld:
-    def __init__(self, func):
-        self.function = func
-  
-    def __call__(self, *args, **kwargs):
-        start_time = time()
-        result = self.function(*args, **kwargs)
-        end_time = time()
-        print(&#34;Execution took {} seconds&#34;.format(end_time-start_time))
-        return result</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -151,17 +144,8 @@ class CheckMarketOpen:
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="src.application.decorators.trading.RunIfMarketOpen" href="#src.application.decorators.trading.RunIfMarketOpen">RunIfMarketOpen</a></code></li>
 <li><code><a title="src.application.decorators.trading.Timer" href="#src.application.decorators.trading.Timer">Timer</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="src.application.decorators.trading.CheckMarketOpen" href="#src.application.decorators.trading.CheckMarketOpen">CheckMarketOpen</a></code></h4>
-</li>
-<li>
-<h4><code><a title="src.application.decorators.trading.TimerOld" href="#src.application.decorators.trading.TimerOld">TimerOld</a></code></h4>
-</li>
 </ul>
 </li>
 </ul>

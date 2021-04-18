@@ -34,12 +34,7 @@ from config import config
 
 def reset():
   reset_loop_count()
-  reset_and_send_list()
-
-def getLogger():
-  log_config = config.LOG_CONFIG
-  logger = logging.getLogger(log_config[&#39;name&#39;])
-  return LoggerClient.setup_logger(log_config, logger)</code></pre>
+  reset_and_send_list()</code></pre>
 </details>
 </section>
 <section>
@@ -49,21 +44,6 @@ def getLogger():
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="src.application.utils.util.getLogger"><code class="name flex">
-<span>def <span class="ident">getLogger</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def getLogger():
-  log_config = config.LOG_CONFIG
-  logger = logging.getLogger(log_config[&#39;name&#39;])
-  return LoggerClient.setup_logger(log_config, logger)</code></pre>
-</details>
-</dd>
 <dt id="src.application.utils.util.reset"><code class="name flex">
 <span>def <span class="ident">reset</span></span>(<span>)</span>
 </code></dt>
@@ -96,7 +76,6 @@ def getLogger():
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="src.application.utils.util.getLogger" href="#src.application.utils.util.getLogger">getLogger</a></code></li>
 <li><code><a title="src.application.utils.util.reset" href="#src.application.utils.util.reset">reset</a></code></li>
 </ul>
 </li>

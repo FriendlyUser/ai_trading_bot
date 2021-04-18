@@ -33,13 +33,13 @@ import numpy as np
 
 from statsmodels.tsa.arima.model import ARIMA
 from application.utils.util import reset
-from application.decorators.trading import Timer
+from application.decorators.trading import Timer, RunIfMarketOpen
 
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+        
         self._config = config
         self._logger = logger
-
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
@@ -58,20 +58,15 @@ class TradingSystem:
 
     # its fine if decorators dont log to discord
     # right now they only perform timing and tracking
+    @RunIfMarketOpen
     @Timer
     async def handle_trading(self):
-        market_open = self._alpaca_repository.is_market_open()
-        if market_open:
-            # run some main logic here
-            self._logger.info(&#34;Main loop goes here&#34;)
-            # scanning S&amp;P 500
-            for stock in self._stocks:
-                data = self._yahoo_repository.get_finance_data(stock)
-                result, forecast = self._ai_repository.get_forecast(data)
-                if (abs(forecast - result) &gt; 0.1):
-                    self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
-        else: 
-            self._logger.warning(&#34;Market is closed&#34;)
+        # scanning S&amp;P 500
+        for stock in self._stocks:
+            data = self._yahoo_repository.get_finance_data(stock)
+            result, forecast = self._ai_repository.get_forecast(data)
+            if (abs(forecast - result) &gt; 0.1):
+                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
         reset()</code></pre>
 </details>
 </section>
@@ -96,9 +91,9 @@ class TradingSystem:
 </summary>
 <pre><code class="python">class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+        
         self._config = config
         self._logger = logger
-
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
@@ -117,26 +112,21 @@ class TradingSystem:
 
     # its fine if decorators dont log to discord
     # right now they only perform timing and tracking
+    @RunIfMarketOpen
     @Timer
     async def handle_trading(self):
-        market_open = self._alpaca_repository.is_market_open()
-        if market_open:
-            # run some main logic here
-            self._logger.info(&#34;Main loop goes here&#34;)
-            # scanning S&amp;P 500
-            for stock in self._stocks:
-                data = self._yahoo_repository.get_finance_data(stock)
-                result, forecast = self._ai_repository.get_forecast(data)
-                if (abs(forecast - result) &gt; 0.1):
-                    self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
-        else: 
-            self._logger.warning(&#34;Market is closed&#34;)
+        # scanning S&amp;P 500
+        for stock in self._stocks:
+            data = self._yahoo_repository.get_finance_data(stock)
+            result, forecast = self._ai_repository.get_forecast(data)
+            if (abs(forecast - result) &gt; 0.1):
+                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
         reset()</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.application.actions.trading_system.TradingSystem.handle_trading"><code class="name flex">
-<span>async def <span class="ident">handle_trading</span></span>(<span>self)</span>
+<span>async def <span class="ident">handle_trading</span></span>(<span>self, *args, **kwargs)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -144,21 +134,19 @@ class TradingSystem:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">@Timer
-async def handle_trading(self):
+<pre><code class="python">async def _decorator(self, *args, **kwargs):
+    # access a from TestSample
     market_open = self._alpaca_repository.is_market_open()
-    if market_open:
-        # run some main logic here
-        self._logger.info(&#34;Main loop goes here&#34;)
-        # scanning S&amp;P 500
-        for stock in self._stocks:
-            data = self._yahoo_repository.get_finance_data(stock)
-            result, forecast = self._ai_repository.get_forecast(data)
-            if (abs(forecast - result) &gt; 0.1):
-                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
-    else: 
-        self._logger.warning(&#34;Market is closed&#34;)
-    reset()</code></pre>
+    trading_cfg = self._config.TRADING_CONFIG
+    if market_open or trading_cfg.get(&#39;DEBUG&#39;, False):
+        self._logger.buy(&#34;Market open&#34;)
+        result = await func(self, *args, **kwargs)
+        return result
+    else:
+        self._logger.debug(&#34;Market closed&#34;)
+        def fun(): 
+            pass
+        return fun</code></pre>
 </details>
 </dd>
 <dt id="src.application.actions.trading_system.TradingSystem.monitoring"><code class="name flex">

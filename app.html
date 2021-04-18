@@ -43,7 +43,7 @@ from config import config
 from application import __version__
 
 class Container:
-
+    &#34;&#34;&#34;Has access to all repositories and logger&#34;&#34;&#34;
     def __init__(self):
         self._logger = LoggerClient(config).get_logger()
         self._logger.info(&#34;AI trading system starting...&#34;, {&#34;version&#34;: __version__})
@@ -58,10 +58,12 @@ class Container:
             self._logger, config, self._yahoo_repository, self._ai_repository, self._alpaca_repository)
 
     async def start_monitoring(self):
+        &#34;&#34;&#34;Main loop to monitor stock market&#34;&#34;&#34;
         await self._trading_system.monitoring(config.POLLING_CONFIG[&#39;yahoo_interval&#39;], exec_on_start=True)
 
 def start_app():
-      app.run(host=&#39;0.0.0.0&#39;, port=8080)
+    &#34;&#34;&#34;start server app&#34;&#34;&#34;
+    app.run(host=&#39;0.0.0.0&#39;, port=8080)
 
 if __name__ == &#39;__main__&#39;:
     container = Container()
@@ -84,13 +86,14 @@ if __name__ == &#39;__main__&#39;:
 <span>def <span class="ident">start_app</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>start server app</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def start_app():
-      app.run(host=&#39;0.0.0.0&#39;, port=8080)</code></pre>
+    &#34;&#34;&#34;start server app&#34;&#34;&#34;
+    app.run(host=&#39;0.0.0.0&#39;, port=8080)</code></pre>
 </details>
 </dd>
 </dl>
@@ -102,13 +105,13 @@ if __name__ == &#39;__main__&#39;:
 <span>class <span class="ident">Container</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Has access to all repositories and logger</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Container:
-
+    &#34;&#34;&#34;Has access to all repositories and logger&#34;&#34;&#34;
     def __init__(self):
         self._logger = LoggerClient(config).get_logger()
         self._logger.info(&#34;AI trading system starting...&#34;, {&#34;version&#34;: __version__})
@@ -123,6 +126,7 @@ if __name__ == &#39;__main__&#39;:
             self._logger, config, self._yahoo_repository, self._ai_repository, self._alpaca_repository)
 
     async def start_monitoring(self):
+        &#34;&#34;&#34;Main loop to monitor stock market&#34;&#34;&#34;
         await self._trading_system.monitoring(config.POLLING_CONFIG[&#39;yahoo_interval&#39;], exec_on_start=True)</code></pre>
 </details>
 <h3>Methods</h3>
@@ -131,12 +135,13 @@ if __name__ == &#39;__main__&#39;:
 <span>async def <span class="ident">start_monitoring</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Main loop to monitor stock market</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">async def start_monitoring(self):
+    &#34;&#34;&#34;Main loop to monitor stock market&#34;&#34;&#34;
     await self._trading_system.monitoring(config.POLLING_CONFIG[&#39;yahoo_interval&#39;], exec_on_start=True)</code></pre>
 </details>
 </dd>
