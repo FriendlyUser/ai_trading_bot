@@ -1,10 +1,11 @@
 #/usr/bin/env python3
 #
 from time import time
+from application.utils.util import prettify_time
 from functools import wraps
 
 def Timer(func):
-    """ Times 
+    """ Time execution time
     """
     def _decorator(self, *args, **kwargs):
         # access a from TestSample
@@ -12,18 +13,12 @@ def Timer(func):
         result = func(self, *args, **kwargs)
         end_time = time()
         # util function to map seconds to nice format
-        self._logger.buy("Execution took {} seconds".format(end_time-start_time))
+        nice_time = prettify_time(end_time-start_time)
+        msg = f"Execution of {func.__name__}took {nice_time}"
+        self._logger.buy(msg)
         return result
     return _decorator
 
-
-# def Timer(method):
-#     @wraps(method)
-#     async def _impl(self, *method_args, **method_kwargs):
-#         start_time = time()
-#         method_output = await method(self, *method_args, **method_kwargs)
-#         end_time = time()
-#     return _impl
 
 def RunIfMarketOpen(func):
     async def _decorator(self, *args, **kwargs):

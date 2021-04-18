@@ -5,5 +5,20 @@ from application.clients.logger_client import LoggerClient
 from config import config
 
 def reset():
+  """reset the loop iteration for messages and thread delays"""
   reset_loop_count()
   reset_and_send_list()
+
+def prettify_time(time):
+  """numeric time in seconds"""
+  if time < 1e-6 and time > 1e-9:
+    #
+    return f"{time*1e6:.2} microseconds" 
+    pass
+  elif time < 1e-9:
+    return f"{time*1e9:.2} nanoseconds"
+  elif time < 1e-3 and time > 1e-6:
+    return f"{time*1e3:.2} milliseconds"
+    # millseconds string
+  else:
+    return f"{time:.2} seconds"
