@@ -12,7 +12,7 @@ LOG_CONFIG = {
 
 POLLING_CONFIG = {
     # 'yahoo_interval': 3000,
-    'yahoo_interval': 60*29,
+    'yahoo_interval': 60*1,
 }
 
 ALPACA_CONFIG = {
@@ -26,6 +26,7 @@ ALPACA_CONFIG = {
 TRADING_CONFIG = {
     'DEBUG': True
 }
+
 DISCORD_WEBHOOK = os.environ["DISCORD_TRADING_WEBHOOK"]
 
 PORT = random.randint(2000, 9000)

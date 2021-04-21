@@ -2,9 +2,10 @@ import logging
 import requests
 import json
 from config.config import DISCORD_WEBHOOK
-from application.utils.loop_count import get_loop_count, set_loop_count
+from application.utils.state import get_loop_count, set_loop_count
 from threading import Timer
 
+# list of records to send to discord
 record_list: list = []
 
 def get_list():

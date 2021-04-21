@@ -6,7 +6,7 @@ import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
 from application.utils.util import reset
 from application.decorators.trading import Timer, RunIfMarketOpen
-
+from application.utils.state import increment_counter, get_counter
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -34,10 +34,28 @@ class TradingSystem:
     @Timer
     async def handle_trading(self):
         # scanning S&P 500
-        # change configuration to run different analysis based on config    
+        # change configuration to run different analysis based on config   
         for stock in self._stocks:
             data = self._yahoo_repository.get_finance_data(stock)
             result, forecast = self._ai_repository.get_forecast(data)
+            # TODO calculate percentage difference
             if (abs(forecast - result) > 0.1):
-                self._logger.info("S&P less than 0.05, preform trade")
+                # TODO add percent difference
+                self._logger.info("S&P less than 0.05, preform trade", {
+                    "forecast": forecast,   
+                    "result": result
+                })
+
+        # TODO 
         reset()
+        increment_counter()
+
+    # handles events that occur on each iteration
+    async def handle_timed_events():
+        counter = get_counter()
+        if counter % 10 == 0:
+            pass
+        elif counter % 5 == 0:
+            pass
+        pass
+
