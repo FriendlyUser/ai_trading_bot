@@ -38,6 +38,7 @@ class TradingSystem:
         for stock in self._stocks:
             data = self._yahoo_repository.get_finance_data(stock)
             result, forecast = self._ai_repository.get_forecast(data)
+            # parameterize forecasting
             # TODO calculate percentage difference
             if (abs(forecast - result) > 0.1):
                 # TODO add percent difference
@@ -49,13 +50,26 @@ class TradingSystem:
         # TODO 
         reset()
         increment_counter()
+        await self.handle_timed_events()
 
     # handles events that occur on each iteration
-    async def handle_timed_events():
+    async def handle_timed_events(self):
+
         counter = get_counter()
+        indicies = ["^IXIC"]
         if counter % 10 == 0:
+            for index in indices:
+                data = self._yahoo_repository.get_finance_data(stock)
+                # TODO implement new system
+                result, forecast = self._ai_repository.get_forecast(data)
+                # TODO add percent difference
+                self._logger.debug(f"*Event Index* - {index}", {
+                    "forecast": forecast,   
+                    "result": result,
+                    "index": index
+                })
             pass
-        elif counter % 5 == 0:
+        if counter % 5 == 0:
             pass
         pass
 
