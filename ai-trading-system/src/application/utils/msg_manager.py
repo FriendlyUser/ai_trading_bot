@@ -54,6 +54,7 @@ def map_record_to_embed(record: logging.LogRecord):
         "inline": "true"
       }
       fields.append(field)
+    print(fields)
     embed["fields"] = fields
   return embed 
 

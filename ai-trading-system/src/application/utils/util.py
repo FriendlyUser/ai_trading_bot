@@ -1,6 +1,6 @@
 import logging
 from application.utils.msg_manager import reset_and_send_list
-from application.utils.loop_count import reset_loop_count
+from application.utils.state import reset_loop_count
 from application.clients.logger_client import LoggerClient
 from config import config
 
