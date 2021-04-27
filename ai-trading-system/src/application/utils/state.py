@@ -15,7 +15,6 @@ def get_loop_count():
 
 def increment_loop_count():
     global loop_count
-    global counter
     return loop_count + 1
 
 def set_loop_count(new_value):

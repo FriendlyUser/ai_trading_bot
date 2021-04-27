@@ -73,6 +73,8 @@ class TradingSystem:
                     "index": str(index)
                 })
             pass
+        else:
+            self._logger.debug(counter)
         if counter % 5 == 0:
             pass
         pass
