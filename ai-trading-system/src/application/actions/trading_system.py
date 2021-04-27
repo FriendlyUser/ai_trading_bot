@@ -40,11 +40,12 @@ class TradingSystem:
             result, forecast = self._ai_repository.get_forecast(data)
             # parameterize forecasting
             # TODO calculate percentage difference
+
             if (abs(forecast - result) > 0.1):
                 # TODO add percent difference
                 self._logger.info("S&P less than 0.05, preform trade", {
-                    "forecast": forecast,   
-                    "result": result
+                    "forecast": f"{forecast:.2f}",   
+                    "result": f"{result:.2f}",
                 })
 
         # TODO 
@@ -58,15 +59,15 @@ class TradingSystem:
         counter = get_counter()
         indicies = ["^IXIC", "^RUT", "DOW"]
         if counter % 10 == 0:
-            for index in indices:
+            for index in indicies:
                 data = self._yahoo_repository.get_finance_data(stock)
                 # TODO implement new system
                 result, forecast = self._ai_repository.get_forecast(data)
                 # TODO add percent difference
                 self._logger.debug(f"*Event Index* - {index}", {
-                    "forecast": forecast,   
-                    "result": result,
-                    "index": index
+                    "forecast": f"{forecast:.2f}",   
+                    "result": f"{result:.2f}",
+                    "index": str(index)
                 })
             pass
         if counter % 5 == 0:
