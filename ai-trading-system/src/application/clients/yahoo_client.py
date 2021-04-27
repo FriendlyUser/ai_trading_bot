@@ -16,5 +16,6 @@ class YahooClient:
         df = ticker.history(period=period, interval=interval)[['Low']]
         self._logger.info(f'Data found. Last value dated on {df.index[-1]}')
         df['date'] = pd.to_datetime(df.index).time
+        df['plt_date'] = df.index
         df.set_index('date', inplace=True)
         return df

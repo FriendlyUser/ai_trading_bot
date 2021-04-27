@@ -41,7 +41,7 @@ class TradingSystem:
             result, forecast = self._ai_repository.get_forecast(data)
             # parameterize forecasting
             # TODO calculate percentage difference
-            plt.plot(data)
+            plt.plot(data["plt_date"], data["Close"])
             fig = plt.gcf()
             data = fig_to_buffer(fig)
             send_image(data)
@@ -61,7 +61,7 @@ class TradingSystem:
 
         counter = get_counter()
         indicies = ["^IXIC", "^RUT", "DOW"]
-        if counter % 10 == 0:
+        if counter % 2 == 0:
             for index in indicies:
                 data = self._yahoo_repository.get_finance_data(stock)
                 # TODO implement new system
