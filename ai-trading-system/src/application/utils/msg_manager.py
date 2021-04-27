@@ -47,14 +47,7 @@ def map_record_to_embed(record: logging.LogRecord):
   fields = []
   # map args to field
   if type(record.args) == dict:
-    # grab attached files
-    # assume files are attached as base64 data
-    args = record.args
-    # assume one image for log record at most
-    if "file" in args:
-      embed["file"] = [args.file]
-    del args["file"]
-    for name, value in args.items():
+    for name, value in record.args.items():
       field = {
         "name": name,
         "value": value,
@@ -66,11 +59,11 @@ def map_record_to_embed(record: logging.LogRecord):
   return embed 
 
 # sends image to correct chat service
-def send_image(image: str, name: str = 'file'):
+def send_image(image: str, name: str = 'file.png'):
   url = DISCORD_WEBHOOK
   loop_count = get_loop_count()
   delay = loop_count * 2
-  t = Timer(delay, post_image_to_discord, [image, name])
+  t = Timer(delay, post_image_to_discord, [url, image, name])
   t.start()
   set_loop_count(loop_count+1)
 
@@ -88,18 +81,21 @@ def send_msgs_to_discord(record_list: list):
   t.start()
   set_loop_count(loop_count+1)
 
-def post_image_to_discord(url: str, file: str, filename):
+def post_image_to_discord(url: str, file: str, filename: str = 'file'):
   url = url
   result = requests.post(
-      url, files=dict(filename: file)
+      url, files={filename: file}
   )
 
   try:
       result.raise_for_status()
   except requests.exceptions.HTTPError as err:
-      print(err)
+      # print(err)
+      pass 
+      # print("ERROR")
   else:
-      print("Payload delivered successfully, code {}.".format(result.status_code))
+      pass
+      # print("Image Delivered {}.".format(result.status_code))
 
 # TODO add emergency logging
 def post_webhook_content(url: str, embeds: list):

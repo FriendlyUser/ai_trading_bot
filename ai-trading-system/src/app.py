@@ -9,6 +9,8 @@ from application.repositories.alpaca_repository import AlpacaRepository
 from application.repositories.ai_repository import AIRepository
 from application.actions.trading_system import TradingSystem
 from application import __version__
+from application.utils.util import read_disk_image
+from application.utils.msg_manager import send_image
 from threading import Timer
 from server import app
 from config import config
@@ -39,7 +41,10 @@ def start_app():
 
 if __name__ == '__main__':
     container = Container()
-
+    # send image
+    sample_img = read_disk_image()
+    send_image(sample_img)
+    # send hyun for fun
     t = Timer(2, start_app)
     t.start()
     asyncio.run(container.start_monitoring())
