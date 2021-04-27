@@ -56,7 +56,7 @@ class TradingSystem:
     async def handle_timed_events(self):
 
         counter = get_counter()
-        indicies = ["^IXIC"]
+        indicies = ["^IXIC", "^RUT", "DOW"]
         if counter % 10 == 0:
             for index in indices:
                 data = self._yahoo_repository.get_finance_data(stock)
