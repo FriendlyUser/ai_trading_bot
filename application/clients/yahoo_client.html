@@ -41,7 +41,7 @@ class YahooClient:
         self._logger.info(&#39;Getting data from Yahoo Finance...&#39;)
 
         ticker = yf.Ticker(stock)
-        df = ticker.history(period=period, interval=interval)[[&#39;Low&#39;]]
+        df = ticker.history(period=period, interval=interval)
         self._logger.info(f&#39;Data found. Last value dated on {df.index[-1]}&#39;)
         df[&#39;date&#39;] = pd.to_datetime(df.index).time
         df[&#39;plt_date&#39;] = df.index
@@ -78,7 +78,7 @@ class YahooClient:
         self._logger.info(&#39;Getting data from Yahoo Finance...&#39;)
 
         ticker = yf.Ticker(stock)
-        df = ticker.history(period=period, interval=interval)[[&#39;Low&#39;]]
+        df = ticker.history(period=period, interval=interval)
         self._logger.info(f&#39;Data found. Last value dated on {df.index[-1]}&#39;)
         df[&#39;date&#39;] = pd.to_datetime(df.index).time
         df[&#39;plt_date&#39;] = df.index
@@ -101,7 +101,7 @@ class YahooClient:
     self._logger.info(&#39;Getting data from Yahoo Finance...&#39;)
 
     ticker = yf.Ticker(stock)
-    df = ticker.history(period=period, interval=interval)[[&#39;Low&#39;]]
+    df = ticker.history(period=period, interval=interval)
     self._logger.info(f&#39;Data found. Last value dated on {df.index[-1]}&#39;)
     df[&#39;date&#39;] = pd.to_datetime(df.index).time
     df[&#39;plt_date&#39;] = df.index
