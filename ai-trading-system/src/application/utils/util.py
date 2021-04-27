@@ -28,7 +28,7 @@ def prettify_time(time):
     return f"{time:.2} seconds"
 
 def read_disk_image():
-  file_path = 'src/assets/HyunWoo_Avatar.png'
+  file_path = 'ai-trading-system/assets/HyunWoo_Avatar.png'
   with open(file_path, "rb") as image_file:
     encoded_string = image_file.read()
   return encoded_string
