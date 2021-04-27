@@ -63,7 +63,7 @@ class TradingSystem:
         indicies = ["^IXIC", "^RUT", "DOW"]
         if counter % 2 == 0:
             for index in indicies:
-                data = self._yahoo_repository.get_finance_data(stock)
+                data = self._yahoo_repository.get_finance_data(index)
                 # TODO implement new system
                 result, forecast = self._ai_repository.get_forecast(data)
                 # TODO add percent difference
