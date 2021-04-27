@@ -24,9 +24,9 @@ ALPACA_CONFIG = {
 
 
 TRADING_CONFIG = {
-    'DEBUG': True
+    'DEBUG': False
 }
 
 DISCORD_WEBHOOK = os.environ["DISCORD_TRADING_WEBHOOK"]
 
-PORT = random.randint(2000, 9000)
+PORT = 8080
