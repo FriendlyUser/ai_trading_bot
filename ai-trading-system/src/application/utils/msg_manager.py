@@ -15,7 +15,7 @@ def get_list():
 def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) > 4:
+    if len(record_list) >= 4:
       send_msgs_to_discord(record_list)
       reset_list()
       return None
@@ -58,6 +58,16 @@ def map_record_to_embed(record: logging.LogRecord):
     embed["fields"] = fields
   return embed 
 
+# sends image to correct chat service
+def send_image(image: str, name: str = 'file.png'):
+  url = DISCORD_WEBHOOK
+  loop_count = get_loop_count()
+  delay = loop_count * 2
+  t = Timer(delay, post_image_to_discord, [url, image, name])
+  t.start()
+  set_loop_count(loop_count+1)
+
+# TODO update name to reflect how it should work
 def send_msgs_to_discord(record_list: list):
   # map each record 
   url = DISCORD_WEBHOOK
@@ -71,6 +81,23 @@ def send_msgs_to_discord(record_list: list):
   t.start()
   set_loop_count(loop_count+1)
 
+def post_image_to_discord(url: str, file: str, filename: str = 'file'):
+  url = url
+  result = requests.post(
+      url, files={filename: file}
+  )
+
+  try:
+      result.raise_for_status()
+  except requests.exceptions.HTTPError as err:
+      # print(err)
+      pass 
+      # print("ERROR")
+  else:
+      pass
+      # print("Image Delivered {}.".format(result.status_code))
+
+# TODO add emergency logging
 def post_webhook_content(url: str, embeds: list):
     url = url
     data = {}

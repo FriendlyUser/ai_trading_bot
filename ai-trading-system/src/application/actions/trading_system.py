@@ -2,11 +2,12 @@ import asyncio
 
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
-from application.utils.util import reset
+from application.utils.util import reset, fig_to_buffer
 from application.decorators.trading import Timer, RunIfMarketOpen
 from application.utils.state import increment_counter, get_counter
+from application.utils.msg_manager import send_image
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -40,7 +41,10 @@ class TradingSystem:
             result, forecast = self._ai_repository.get_forecast(data)
             # parameterize forecasting
             # TODO calculate percentage difference
-
+            plt.plot(data)
+            fig = plt.gcf()
+            data = fig_to_buffer(fig)
+            send_image(data)
             if (abs(forecast - result) > 0.1):
                 # TODO add percent difference
                 self._logger.info("S&P less than 0.05, preform trade", {
@@ -48,7 +52,6 @@ class TradingSystem:
                     "result": f"{result:.2f}",
                 })
 
-        # TODO 
         reset()
         increment_counter()
         await self.handle_timed_events()

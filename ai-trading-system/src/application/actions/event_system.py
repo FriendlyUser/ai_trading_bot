@@ -11,7 +11,6 @@ from statsmodels.tsa.arima.model import ARIMA
 from application.utils.util import reset
 from application.decorators.trading import Timer, RunIfMarketOpen
 from application.utils.state import increment_counter, get_counter
-from application.actions.event_system import EventSystem
 class EventSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
