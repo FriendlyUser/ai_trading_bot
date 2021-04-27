@@ -30,9 +30,10 @@
 import requests
 import json
 from config.config import DISCORD_WEBHOOK
-from application.utils.loop_count import get_loop_count, set_loop_count
+from application.utils.state import get_loop_count, set_loop_count
 from threading import Timer
 
+# list of records to send to discord
 record_list: list = []
 
 def get_list():
@@ -42,7 +43,7 @@ def get_list():
 def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) &gt; 4:
+    if len(record_list) &gt;= 4:
       send_msgs_to_discord(record_list)
       reset_list()
       return None
@@ -81,9 +82,20 @@ def map_record_to_embed(record: logging.LogRecord):
         &#34;inline&#34;: &#34;true&#34;
       }
       fields.append(field)
+    print(fields)
     embed[&#34;fields&#34;] = fields
   return embed 
 
+# sends image to correct chat service
+def send_image(image: str, name: str = &#39;file.png&#39;):
+  url = DISCORD_WEBHOOK
+  loop_count = get_loop_count()
+  delay = loop_count * 2
+  t = Timer(delay, post_image_to_discord, [url, image, name])
+  t.start()
+  set_loop_count(loop_count+1)
+
+# TODO update name to reflect how it should work
 def send_msgs_to_discord(record_list: list):
   # map each record 
   url = DISCORD_WEBHOOK
@@ -97,6 +109,23 @@ def send_msgs_to_discord(record_list: list):
   t.start()
   set_loop_count(loop_count+1)
 
+def post_image_to_discord(url: str, file: str, filename: str = &#39;file&#39;):
+  url = url
+  result = requests.post(
+      url, files={filename: file}
+  )
+
+  try:
+      result.raise_for_status()
+  except requests.exceptions.HTTPError as err:
+      # print(err)
+      pass 
+      # print(&#34;ERROR&#34;)
+  else:
+      pass
+      # print(&#34;Image Delivered {}.&#34;.format(result.status_code))
+
+# TODO add emergency logging
 def post_webhook_content(url: str, embeds: list):
     url = url
     data = {}
@@ -162,7 +191,7 @@ def map_log_level_to_color(level: str):
 <pre><code class="python">def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) &gt; 4:
+    if len(record_list) &gt;= 4:
       send_msgs_to_discord(record_list)
       reset_list()
       return None
@@ -223,8 +252,35 @@ def map_log_level_to_color(level: str):
         &#34;inline&#34;: &#34;true&#34;
       }
       fields.append(field)
+    print(fields)
     embed[&#34;fields&#34;] = fields
   return embed </code></pre>
+</details>
+</dd>
+<dt id="src.application.utils.msg_manager.post_image_to_discord"><code class="name flex">
+<span>def <span class="ident">post_image_to_discord</span></span>(<span>url: str, file: str, filename: str = 'file')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_image_to_discord(url: str, file: str, filename: str = &#39;file&#39;):
+  url = url
+  result = requests.post(
+      url, files={filename: file}
+  )
+
+  try:
+      result.raise_for_status()
+  except requests.exceptions.HTTPError as err:
+      # print(err)
+      pass 
+      # print(&#34;ERROR&#34;)
+  else:
+      pass
+      # print(&#34;Image Delivered {}.&#34;.format(result.status_code))</code></pre>
 </details>
 </dd>
 <dt id="src.application.utils.msg_manager.post_webhook_content"><code class="name flex">
@@ -283,6 +339,24 @@ def map_log_level_to_color(level: str):
     record_list = []</code></pre>
 </details>
 </dd>
+<dt id="src.application.utils.msg_manager.send_image"><code class="name flex">
+<span>def <span class="ident">send_image</span></span>(<span>image: str, name: str = 'file.png')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_image(image: str, name: str = &#39;file.png&#39;):
+  url = DISCORD_WEBHOOK
+  loop_count = get_loop_count()
+  delay = loop_count * 2
+  t = Timer(delay, post_image_to_discord, [url, image, name])
+  t.start()
+  set_loop_count(loop_count+1)</code></pre>
+</details>
+</dd>
 <dt id="src.application.utils.msg_manager.send_msgs_to_discord"><code class="name flex">
 <span>def <span class="ident">send_msgs_to_discord</span></span>(<span>record_list: list)</span>
 </code></dt>
@@ -328,9 +402,11 @@ def map_log_level_to_color(level: str):
 <li><code><a title="src.application.utils.msg_manager.handle_add_record" href="#src.application.utils.msg_manager.handle_add_record">handle_add_record</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.map_log_level_to_color" href="#src.application.utils.msg_manager.map_log_level_to_color">map_log_level_to_color</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.map_record_to_embed" href="#src.application.utils.msg_manager.map_record_to_embed">map_record_to_embed</a></code></li>
+<li><code><a title="src.application.utils.msg_manager.post_image_to_discord" href="#src.application.utils.msg_manager.post_image_to_discord">post_image_to_discord</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.post_webhook_content" href="#src.application.utils.msg_manager.post_webhook_content">post_webhook_content</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.reset_and_send_list" href="#src.application.utils.msg_manager.reset_and_send_list">reset_and_send_list</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.reset_list" href="#src.application.utils.msg_manager.reset_list">reset_list</a></code></li>
+<li><code><a title="src.application.utils.msg_manager.send_image" href="#src.application.utils.msg_manager.send_image">send_image</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.send_msgs_to_discord" href="#src.application.utils.msg_manager.send_msgs_to_discord">send_msgs_to_discord</a></code></li>
 </ul>
 </li>

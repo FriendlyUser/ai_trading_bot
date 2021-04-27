@@ -27,11 +27,15 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import logging
+# importing matplotlib modules
+import base64
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 from application.utils.msg_manager import reset_and_send_list
-from application.utils.loop_count import reset_loop_count
+from application.utils.state import reset_loop_count
 from application.clients.logger_client import LoggerClient
 from config import config
-
+from io import BytesIO
 def reset():
   &#34;&#34;&#34;reset the loop iteration for messages and thread delays&#34;&#34;&#34;
   reset_loop_count()
@@ -49,7 +53,31 @@ def prettify_time(time):
     return f&#34;{time*1e3:.2} milliseconds&#34;
     # millseconds string
   else:
-    return f&#34;{time:.2} seconds&#34;</code></pre>
+    return f&#34;{time:.2} seconds&#34;
+
+def read_disk_image():
+  file_path = &#39;../assets/HyunWoo_Avatar.png&#39;
+  with open(file_path, &#34;rb&#34;) as image_file:
+    encoded_string = image_file.read()
+  return encoded_string
+
+def fig_to_buffer(fig):
+  buf = BytesIO()
+  fig.savefig(buf, format=&#39;png&#39;)
+  buf.seek(0)
+  imgdata = buf.read()
+  return imgdata
+
+# Sample Code to send an image via discord
+# def read_disk_image():
+#   plt.plot(range(10, 20))
+#   fig = plt.gcf()
+
+#   buf = BytesIO()
+#   fig.savefig(buf, format=&#39;png&#39;)
+#   buf.seek(0)
+#   imgdata = buf.read()
+#   return imgdata</code></pre>
 </details>
 </section>
 <section>
@@ -59,6 +87,23 @@ def prettify_time(time):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="src.application.utils.util.fig_to_buffer"><code class="name flex">
+<span>def <span class="ident">fig_to_buffer</span></span>(<span>fig)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fig_to_buffer(fig):
+  buf = BytesIO()
+  fig.savefig(buf, format=&#39;png&#39;)
+  buf.seek(0)
+  imgdata = buf.read()
+  return imgdata</code></pre>
+</details>
+</dd>
 <dt id="src.application.utils.util.prettify_time"><code class="name flex">
 <span>def <span class="ident">prettify_time</span></span>(<span>time)</span>
 </code></dt>
@@ -81,6 +126,22 @@ def prettify_time(time):
     # millseconds string
   else:
     return f&#34;{time:.2} seconds&#34;</code></pre>
+</details>
+</dd>
+<dt id="src.application.utils.util.read_disk_image"><code class="name flex">
+<span>def <span class="ident">read_disk_image</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_disk_image():
+  file_path = &#39;../assets/HyunWoo_Avatar.png&#39;
+  with open(file_path, &#34;rb&#34;) as image_file:
+    encoded_string = image_file.read()
+  return encoded_string</code></pre>
 </details>
 </dd>
 <dt id="src.application.utils.util.reset"><code class="name flex">
@@ -116,7 +177,9 @@ def prettify_time(time):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="src.application.utils.util.fig_to_buffer" href="#src.application.utils.util.fig_to_buffer">fig_to_buffer</a></code></li>
 <li><code><a title="src.application.utils.util.prettify_time" href="#src.application.utils.util.prettify_time">prettify_time</a></code></li>
+<li><code><a title="src.application.utils.util.read_disk_image" href="#src.application.utils.util.read_disk_image">read_disk_image</a></code></li>
 <li><code><a title="src.application.utils.util.reset" href="#src.application.utils.util.reset">reset</a></code></li>
 </ul>
 </li>

@@ -30,11 +30,12 @@
 
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
-from application.utils.util import reset
+from application.utils.util import reset, fig_to_buffer
 from application.decorators.trading import Timer, RunIfMarketOpen
-
+from application.utils.state import increment_counter, get_counter
+from application.utils.msg_manager import send_image
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -62,13 +63,47 @@ class TradingSystem:
     @Timer
     async def handle_trading(self):
         # scanning S&amp;P 500
-        # change configuration to run different analysis based on config    
+        # change configuration to run different analysis based on config   
         for stock in self._stocks:
             data = self._yahoo_repository.get_finance_data(stock)
             result, forecast = self._ai_repository.get_forecast(data)
+            # parameterize forecasting
+            # TODO calculate percentage difference
+            plt.plot(data)
+            fig = plt.gcf()
+            data = fig_to_buffer(fig)
+            send_image(data)
             if (abs(forecast - result) &gt; 0.1):
-                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
-        reset()</code></pre>
+                # TODO add percent difference
+                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;, {
+                    &#34;forecast&#34;: f&#34;{forecast:.2f}&#34;,   
+                    &#34;result&#34;: f&#34;{result:.2f}&#34;,
+                })
+
+        reset()
+        increment_counter()
+        await self.handle_timed_events()
+
+    # handles events that occur on each iteration
+    async def handle_timed_events(self):
+
+        counter = get_counter()
+        indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
+        if counter % 10 == 0:
+            for index in indicies:
+                data = self._yahoo_repository.get_finance_data(stock)
+                # TODO implement new system
+                result, forecast = self._ai_repository.get_forecast(data)
+                # TODO add percent difference
+                self._logger.debug(f&#34;*Event Index* - {index}&#34;, {
+                    &#34;forecast&#34;: f&#34;{forecast:.2f}&#34;,   
+                    &#34;result&#34;: f&#34;{result:.2f}&#34;,
+                    &#34;index&#34;: str(index)
+                })
+            pass
+        if counter % 5 == 0:
+            pass
+        pass</code></pre>
 </details>
 </section>
 <section>
@@ -117,16 +152,80 @@ class TradingSystem:
     @Timer
     async def handle_trading(self):
         # scanning S&amp;P 500
-        # change configuration to run different analysis based on config    
+        # change configuration to run different analysis based on config   
         for stock in self._stocks:
             data = self._yahoo_repository.get_finance_data(stock)
             result, forecast = self._ai_repository.get_forecast(data)
+            # parameterize forecasting
+            # TODO calculate percentage difference
+            plt.plot(data)
+            fig = plt.gcf()
+            data = fig_to_buffer(fig)
+            send_image(data)
             if (abs(forecast - result) &gt; 0.1):
-                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;)
-        reset()</code></pre>
+                # TODO add percent difference
+                self._logger.info(&#34;S&amp;P less than 0.05, preform trade&#34;, {
+                    &#34;forecast&#34;: f&#34;{forecast:.2f}&#34;,   
+                    &#34;result&#34;: f&#34;{result:.2f}&#34;,
+                })
+
+        reset()
+        increment_counter()
+        await self.handle_timed_events()
+
+    # handles events that occur on each iteration
+    async def handle_timed_events(self):
+
+        counter = get_counter()
+        indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
+        if counter % 10 == 0:
+            for index in indicies:
+                data = self._yahoo_repository.get_finance_data(stock)
+                # TODO implement new system
+                result, forecast = self._ai_repository.get_forecast(data)
+                # TODO add percent difference
+                self._logger.debug(f&#34;*Event Index* - {index}&#34;, {
+                    &#34;forecast&#34;: f&#34;{forecast:.2f}&#34;,   
+                    &#34;result&#34;: f&#34;{result:.2f}&#34;,
+                    &#34;index&#34;: str(index)
+                })
+            pass
+        if counter % 5 == 0:
+            pass
+        pass</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
+<dt id="src.application.actions.trading_system.TradingSystem.handle_timed_events"><code class="name flex">
+<span>async def <span class="ident">handle_timed_events</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def handle_timed_events(self):
+
+    counter = get_counter()
+    indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
+    if counter % 10 == 0:
+        for index in indicies:
+            data = self._yahoo_repository.get_finance_data(stock)
+            # TODO implement new system
+            result, forecast = self._ai_repository.get_forecast(data)
+            # TODO add percent difference
+            self._logger.debug(f&#34;*Event Index* - {index}&#34;, {
+                &#34;forecast&#34;: f&#34;{forecast:.2f}&#34;,   
+                &#34;result&#34;: f&#34;{result:.2f}&#34;,
+                &#34;index&#34;: str(index)
+            })
+        pass
+    if counter % 5 == 0:
+        pass
+    pass</code></pre>
+</details>
+</dd>
 <dt id="src.application.actions.trading_system.TradingSystem.handle_trading"><code class="name flex">
 <span>async def <span class="ident">handle_trading</span></span>(<span>self, *args, **kwargs)</span>
 </code></dt>
@@ -193,6 +292,7 @@ class TradingSystem:
 <li>
 <h4><code><a title="src.application.actions.trading_system.TradingSystem" href="#src.application.actions.trading_system.TradingSystem">TradingSystem</a></code></h4>
 <ul class="">
+<li><code><a title="src.application.actions.trading_system.TradingSystem.handle_timed_events" href="#src.application.actions.trading_system.TradingSystem.handle_timed_events">handle_timed_events</a></code></li>
 <li><code><a title="src.application.actions.trading_system.TradingSystem.handle_trading" href="#src.application.actions.trading_system.TradingSystem.handle_trading">handle_trading</a></code></li>
 <li><code><a title="src.application.actions.trading_system.TradingSystem.monitoring" href="#src.application.actions.trading_system.TradingSystem.monitoring">monitoring</a></code></li>
 </ul>
