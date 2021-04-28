@@ -27,7 +27,9 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#/usr/bin/env python3
-#
+import traceback
+import sys
+import os
 from time import time
 from application.utils.util import prettify_time
 from functools import wraps
@@ -63,6 +65,23 @@ def RunIfMarketOpen(func):
             def fun(): 
                 pass
             return fun
+    return _decorator
+
+def RunFuncAndHandleException(func):
+    async def _decorator(self, *args, **kwargs):
+        try:
+            result = await func(self, *args, **kwargs)
+            return result
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            error_name = e.__name__
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            self._logger.error(str(traceback.format_exc()), {
+                &#34;error&#34;: str(error),
+                &#34;type&#34;: str(exc_type),
+                &#39;fname&#39;: str(fname),
+                &#39;ename&#39;: error_name
+            })
     return _decorator</code></pre>
 </details>
 </section>
@@ -73,6 +92,33 @@ def RunIfMarketOpen(func):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="src.application.decorators.trading.RunFuncAndHandleException"><code class="name flex">
+<span>def <span class="ident">RunFuncAndHandleException</span></span>(<span>func)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def RunFuncAndHandleException(func):
+    async def _decorator(self, *args, **kwargs):
+        try:
+            result = await func(self, *args, **kwargs)
+            return result
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            error_name = e.__name__
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            self._logger.error(str(traceback.format_exc()), {
+                &#34;error&#34;: str(error),
+                &#34;type&#34;: str(exc_type),
+                &#39;fname&#39;: str(fname),
+                &#39;ename&#39;: error_name
+            })
+    return _decorator</code></pre>
+</details>
+</dd>
 <dt id="src.application.decorators.trading.RunIfMarketOpen"><code class="name flex">
 <span>def <span class="ident">RunIfMarketOpen</span></span>(<span>func)</span>
 </code></dt>
@@ -143,6 +189,7 @@ def RunIfMarketOpen(func):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="src.application.decorators.trading.RunFuncAndHandleException" href="#src.application.decorators.trading.RunFuncAndHandleException">RunFuncAndHandleException</a></code></li>
 <li><code><a title="src.application.decorators.trading.RunIfMarketOpen" href="#src.application.decorators.trading.RunIfMarketOpen">RunIfMarketOpen</a></code></li>
 <li><code><a title="src.application.decorators.trading.Timer" href="#src.application.decorators.trading.Timer">Timer</a></code></li>
 </ul>

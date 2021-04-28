@@ -33,7 +33,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 from application.utils.util import reset, fig_to_buffer
-from application.decorators.trading import Timer, RunIfMarketOpen
+from application.decorators.trading import Timer, RunIfMarketOpen, RunFuncAndHandleException
 from application.utils.state import increment_counter, get_counter
 from application.utils.msg_manager import send_image
 class TradingSystem:
@@ -61,6 +61,7 @@ class TradingSystem:
     # right now they only perform timing and tracking
     @RunIfMarketOpen
     @Timer
+    @RunFuncAndHandleException
     async def handle_trading(self):
         # scanning S&amp;P 500
         # change configuration to run different analysis based on config   
@@ -152,6 +153,7 @@ class TradingSystem:
     # right now they only perform timing and tracking
     @RunIfMarketOpen
     @Timer
+    @RunFuncAndHandleException
     async def handle_trading(self):
         # scanning S&amp;P 500
         # change configuration to run different analysis based on config   
