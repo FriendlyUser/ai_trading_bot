@@ -1,5 +1,7 @@
 #/usr/bin/env python3
-#
+import traceback
+import sys
+import os
 from time import time
 from application.utils.util import prettify_time
 from functools import wraps
@@ -35,4 +37,21 @@ def RunIfMarketOpen(func):
             def fun(): 
                 pass
             return fun
+    return _decorator
+
+def RunFuncAndHandleException(func):
+    async def _decorator(self, *args, **kwargs):
+        try:
+            result = await func(self, *args, **kwargs)
+            return result
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            error_name = e.__name__
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            self._logger.error(str(traceback.format_exc()), {
+                "error": str(error),
+                "type": str(exc_type),
+                'fname': str(fname),
+                'ename': error_name
+            })
     return _decorator
