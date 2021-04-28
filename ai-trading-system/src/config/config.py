@@ -24,7 +24,7 @@ ALPACA_CONFIG = {
 
 
 TRADING_CONFIG = {
-    'DEBUG': False
+    'DEBUG': True
 }
 
 DISCORD_WEBHOOK = os.environ["DISCORD_TRADING_WEBHOOK"]
