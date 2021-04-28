@@ -39,10 +39,12 @@ class AIClient:
         self._logger.info(&#39;Calculating forecast with the given data...&#39;)
         # Assuming that we&#39;ve properly trained the model before and that the 
         # hyperparameters are correctly tweaked, we use the full dataset to fit
+
+        # add more logic to catch errors
         y = finance_data[&#39;Low&#39;].values
         model = ARIMA(y, order=(5,0,1)).fit()
         forecast = model.forecast(steps=1)[0]
-
+        # byte indicies must be intergers or slices not str
         # Returning the last real data and the forecast for the next minute
         return (y[len(y)-1], forecast)</code></pre>
 </details>
@@ -75,10 +77,12 @@ class AIClient:
         self._logger.info(&#39;Calculating forecast with the given data...&#39;)
         # Assuming that we&#39;ve properly trained the model before and that the 
         # hyperparameters are correctly tweaked, we use the full dataset to fit
+
+        # add more logic to catch errors
         y = finance_data[&#39;Low&#39;].values
         model = ARIMA(y, order=(5,0,1)).fit()
         forecast = model.forecast(steps=1)[0]
-
+        # byte indicies must be intergers or slices not str
         # Returning the last real data and the forecast for the next minute
         return (y[len(y)-1], forecast)</code></pre>
 </details>
@@ -97,10 +101,12 @@ class AIClient:
     self._logger.info(&#39;Calculating forecast with the given data...&#39;)
     # Assuming that we&#39;ve properly trained the model before and that the 
     # hyperparameters are correctly tweaked, we use the full dataset to fit
+
+    # add more logic to catch errors
     y = finance_data[&#39;Low&#39;].values
     model = ARIMA(y, order=(5,0,1)).fit()
     forecast = model.forecast(steps=1)[0]
-
+    # byte indicies must be intergers or slices not str
     # Returning the last real data and the forecast for the next minute
     return (y[len(y)-1], forecast)</code></pre>
 </details>
