@@ -39,12 +39,6 @@ class TradingSystem:
         for stock in self._stocks:
             data = self._yahoo_repository.get_finance_data(stock)
             result, forecast = self._ai_repository.get_forecast(data)
-            # parameterize forecasting
-            # TODO calculate percentage difference
-            plt.plot(data["plt_date"], data["Close"])
-            fig = plt.gcf()
-            data = fig_to_buffer(fig)
-            send_image(data)
             if (abs(forecast - result) > 0.1):
                 # TODO add percent difference
                 self._logger.info("S&P less than 0.05, preform trade", {
@@ -64,6 +58,12 @@ class TradingSystem:
         if counter % 2 == 0:
             for index in indicies:
                 data = self._yahoo_repository.get_finance_data(index)
+                # parameterize forecasting
+                # TODO calculate percentage difference
+                plt.plot(data["plt_date"], data["Close"])
+                fig = plt.gcf()
+                data = fig_to_buffer(fig)
+                send_image(data)
                 # TODO implement new system
                 result, forecast = self._ai_repository.get_forecast(data)
                 # TODO add percent difference
