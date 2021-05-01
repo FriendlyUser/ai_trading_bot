@@ -16,7 +16,7 @@ class TradingSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-
+        self._event_system  = yahoo_repository
         self._stocks = ["^GSPC"]
 
     async def monitoring(self, seconds, exec_on_start):
@@ -58,21 +58,8 @@ class TradingSystem:
         indicies = ["^IXIC", "^RUT", "DOW"]
         if counter % 2 == 0:
             for index in indicies:
-                data = self._yahoo_repository.get_finance_data(index)
-                # parameterize forecasting
-                # TODO calculate percentage difference
-                plt.plot(data["plt_date"], data["Close"])
-                fig = plt.gcf()
-                data = fig_to_buffer(fig)
-                send_image(data)
-                # TODO implement new system
-                result, forecast = self._ai_repository.get_forecast(data)
-                # TODO add percent difference
-                self._logger.debug(f"*Event Index* - {index}", {
-                    "forecast": f"{forecast:.2f}",   
-                    "result": f"{result:.2f}",
-                    "index": str(index)
-                })
+                plt_data = self._event_system.plot_index(index)
+                send_image(plt_data)
             pass
         else:
             pass
