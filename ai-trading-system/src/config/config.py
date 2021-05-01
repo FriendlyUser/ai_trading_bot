@@ -12,7 +12,7 @@ LOG_CONFIG = {
 
 POLLING_CONFIG = {
     # 'yahoo_interval': 3000,
-    'yahoo_interval': 60*20,
+    'yahoo_interval': 60*2,
 }
 
 ALPACA_CONFIG = {

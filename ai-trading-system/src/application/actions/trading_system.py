@@ -75,7 +75,7 @@ class TradingSystem:
                 })
             pass
         else:
-            self._logger.debug(counter)
+            pass
         if counter % 5 == 0:
             pass
         pass

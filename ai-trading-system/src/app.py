@@ -41,10 +41,4 @@ def start_app():
 
 if __name__ == '__main__':
     container = Container()
-    # send image
-    sample_img = read_disk_image()
-    send_image(sample_img)
-    # send hyun for fun
-    t = Timer(2, start_app)
-    t.start()
     asyncio.run(container.start_monitoring())

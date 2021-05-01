@@ -3,7 +3,7 @@ import traceback
 import sys
 import os
 from time import time
-from application.utils.util import prettify_time
+from application.utils.util import prettify_time, reset
 from functools import wraps
 
 def Timer(func):
@@ -46,12 +46,12 @@ def RunFuncAndHandleException(func):
             return result
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
-            error_name = e.__name__
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            self._logger.error(str(traceback.format_exc()), {
-                "error": str(error),
+            self._logger.debug("ERROR OCCURED")
+            self._logger.debug("Error Occurred", {
+                "error": str(e),
                 "type": str(exc_type),
-                'fname': str(fname),
-                'ename': error_name
+                'fname': str(fname)
             })
+            reset()
     return _decorator

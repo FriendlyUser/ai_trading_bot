@@ -2,7 +2,7 @@ import logging
 import requests
 import json
 from config.config import DISCORD_WEBHOOK
-from application.utils.state import get_loop_count, set_loop_count
+from application.utils.state import get_loop_count, increment_loop_count
 from threading import Timer
 
 # list of records to send to discord
@@ -15,14 +15,24 @@ def get_list():
 def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) >= 4:
+    if len(record_list) >= 5:
+      # split errors and non errors
+      # split errors and messages
       send_msgs_to_discord(record_list)
+      # error_list, other_list = split_record_by_category(record_list)
+      # send_msgs_to_discord(error_list)
+      # send_msgs_to_discord(other_list)
       reset_list()
       return None
     if record == None:
       return None
     record_list.append(record)
 
+
+def split_record_by_category(input_record_list: list, category_list: list = ["ERROR"]):
+  category_list = [r for r in input_record_list if r.levelname in category_list]
+  other_list = [r for r in input_record_list if r.levelname not in category_list]
+  return category_list, other_list
 
 def reset_list():
     global record_list
@@ -54,7 +64,6 @@ def map_record_to_embed(record: logging.LogRecord):
         "inline": "true"
       }
       fields.append(field)
-    print(fields)
     embed["fields"] = fields
   return embed 
 
@@ -62,24 +71,26 @@ def map_record_to_embed(record: logging.LogRecord):
 def send_image(image: str, name: str = 'file.png'):
   url = DISCORD_WEBHOOK
   loop_count = get_loop_count()
-  delay = loop_count * 2
+  delay = loop_count * 5
   t = Timer(delay, post_image_to_discord, [url, image, name])
   t.start()
-  set_loop_count(loop_count+1)
+  increment_loop_count()
 
 # TODO update name to reflect how it should work
-def send_msgs_to_discord(record_list: list):
+def send_msgs_to_discord(record_list: list, url = DISCORD_WEBHOOK):
+  if len(record_list) == 0:
+    return
   # map each record 
-  url = DISCORD_WEBHOOK
   embeds = []
+  # split errors into another list
   for record in record_list:
     embed = map_record_to_embed(record)
     embeds.append(embed)
   loop_count = get_loop_count()
-  delay = loop_count * 2
+  delay = loop_count * 5
   t = Timer(delay, post_webhook_content, [url, embeds])
   t.start()
-  set_loop_count(loop_count+1)
+  increment_loop_count()
 
 def post_image_to_discord(url: str, file: str, filename: str = 'file'):
   url = url
