@@ -31,7 +31,7 @@ import traceback
 import sys
 import os
 from time import time
-from application.utils.util import prettify_time
+from application.utils.util import prettify_time, reset
 from functools import wraps
 
 def Timer(func):
@@ -74,14 +74,14 @@ def RunFuncAndHandleException(func):
             return result
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
-            error_name = e.__name__
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            self._logger.error(str(traceback.format_exc()), {
-                &#34;error&#34;: str(error),
+            self._logger.debug(&#34;ERROR OCCURED&#34;)
+            self._logger.debug(&#34;Error Occurred&#34;, {
+                &#34;error&#34;: str(e),
                 &#34;type&#34;: str(exc_type),
-                &#39;fname&#39;: str(fname),
-                &#39;ename&#39;: error_name
+                &#39;fname&#39;: str(fname)
             })
+            reset()
     return _decorator</code></pre>
 </details>
 </section>
@@ -108,14 +108,14 @@ def RunFuncAndHandleException(func):
             return result
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
-            error_name = e.__name__
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            self._logger.error(str(traceback.format_exc()), {
-                &#34;error&#34;: str(error),
+            self._logger.debug(&#34;ERROR OCCURED&#34;)
+            self._logger.debug(&#34;Error Occurred&#34;, {
+                &#34;error&#34;: str(e),
                 &#34;type&#34;: str(exc_type),
-                &#39;fname&#39;: str(fname),
-                &#39;ename&#39;: error_name
+                &#39;fname&#39;: str(fname)
             })
+            reset()
     return _decorator</code></pre>
 </details>
 </dd>

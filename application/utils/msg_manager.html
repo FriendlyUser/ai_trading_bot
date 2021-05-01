@@ -30,7 +30,7 @@
 import requests
 import json
 from config.config import DISCORD_WEBHOOK
-from application.utils.state import get_loop_count, set_loop_count
+from application.utils.state import get_loop_count, increment_loop_count
 from threading import Timer
 
 # list of records to send to discord
@@ -43,14 +43,24 @@ def get_list():
 def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) &gt;= 4:
+    if len(record_list) &gt;= 5:
+      # split errors and non errors
+      # split errors and messages
       send_msgs_to_discord(record_list)
+      # error_list, other_list = split_record_by_category(record_list)
+      # send_msgs_to_discord(error_list)
+      # send_msgs_to_discord(other_list)
       reset_list()
       return None
     if record == None:
       return None
     record_list.append(record)
 
+
+def split_record_by_category(input_record_list: list, category_list: list = [&#34;ERROR&#34;]):
+  category_list = [r for r in input_record_list if r.levelname in category_list]
+  other_list = [r for r in input_record_list if r.levelname not in category_list]
+  return category_list, other_list
 
 def reset_list():
     global record_list
@@ -82,7 +92,6 @@ def map_record_to_embed(record: logging.LogRecord):
         &#34;inline&#34;: &#34;true&#34;
       }
       fields.append(field)
-    print(fields)
     embed[&#34;fields&#34;] = fields
   return embed 
 
@@ -90,24 +99,26 @@ def map_record_to_embed(record: logging.LogRecord):
 def send_image(image: str, name: str = &#39;file.png&#39;):
   url = DISCORD_WEBHOOK
   loop_count = get_loop_count()
-  delay = loop_count * 2
+  delay = loop_count * 5
   t = Timer(delay, post_image_to_discord, [url, image, name])
   t.start()
-  set_loop_count(loop_count+1)
+  increment_loop_count()
 
 # TODO update name to reflect how it should work
-def send_msgs_to_discord(record_list: list):
+def send_msgs_to_discord(record_list: list, url = DISCORD_WEBHOOK):
+  if len(record_list) == 0:
+    return
   # map each record 
-  url = DISCORD_WEBHOOK
   embeds = []
+  # split errors into another list
   for record in record_list:
     embed = map_record_to_embed(record)
     embeds.append(embed)
   loop_count = get_loop_count()
-  delay = loop_count * 2
+  delay = loop_count * 5
   t = Timer(delay, post_webhook_content, [url, embeds])
   t.start()
-  set_loop_count(loop_count+1)
+  increment_loop_count()
 
 def post_image_to_discord(url: str, file: str, filename: str = &#39;file&#39;):
   url = url
@@ -191,8 +202,13 @@ def map_log_level_to_color(level: str):
 <pre><code class="python">def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) &gt;= 4:
+    if len(record_list) &gt;= 5:
+      # split errors and non errors
+      # split errors and messages
       send_msgs_to_discord(record_list)
+      # error_list, other_list = split_record_by_category(record_list)
+      # send_msgs_to_discord(error_list)
+      # send_msgs_to_discord(other_list)
       reset_list()
       return None
     if record == None:
@@ -252,7 +268,6 @@ def map_log_level_to_color(level: str):
         &#34;inline&#34;: &#34;true&#34;
       }
       fields.append(field)
-    print(fields)
     embed[&#34;fields&#34;] = fields
   return embed </code></pre>
 </details>
@@ -351,14 +366,14 @@ def map_log_level_to_color(level: str):
 <pre><code class="python">def send_image(image: str, name: str = &#39;file.png&#39;):
   url = DISCORD_WEBHOOK
   loop_count = get_loop_count()
-  delay = loop_count * 2
+  delay = loop_count * 5
   t = Timer(delay, post_image_to_discord, [url, image, name])
   t.start()
-  set_loop_count(loop_count+1)</code></pre>
+  increment_loop_count()</code></pre>
 </details>
 </dd>
 <dt id="src.application.utils.msg_manager.send_msgs_to_discord"><code class="name flex">
-<span>def <span class="ident">send_msgs_to_discord</span></span>(<span>record_list: list)</span>
+<span>def <span class="ident">send_msgs_to_discord</span></span>(<span>record_list: list, url='blank')</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -366,18 +381,35 @@ def map_log_level_to_color(level: str):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send_msgs_to_discord(record_list: list):
+<pre><code class="python">def send_msgs_to_discord(record_list: list, url = DISCORD_WEBHOOK):
+  if len(record_list) == 0:
+    return
   # map each record 
-  url = DISCORD_WEBHOOK
   embeds = []
+  # split errors into another list
   for record in record_list:
     embed = map_record_to_embed(record)
     embeds.append(embed)
   loop_count = get_loop_count()
-  delay = loop_count * 2
+  delay = loop_count * 5
   t = Timer(delay, post_webhook_content, [url, embeds])
   t.start()
-  set_loop_count(loop_count+1)</code></pre>
+  increment_loop_count()</code></pre>
+</details>
+</dd>
+<dt id="src.application.utils.msg_manager.split_record_by_category"><code class="name flex">
+<span>def <span class="ident">split_record_by_category</span></span>(<span>input_record_list: list, category_list: list = ['ERROR'])</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def split_record_by_category(input_record_list: list, category_list: list = [&#34;ERROR&#34;]):
+  category_list = [r for r in input_record_list if r.levelname in category_list]
+  other_list = [r for r in input_record_list if r.levelname not in category_list]
+  return category_list, other_list</code></pre>
 </details>
 </dd>
 </dl>
@@ -408,6 +440,7 @@ def map_log_level_to_color(level: str):
 <li><code><a title="src.application.utils.msg_manager.reset_list" href="#src.application.utils.msg_manager.reset_list">reset_list</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.send_image" href="#src.application.utils.msg_manager.send_image">send_image</a></code></li>
 <li><code><a title="src.application.utils.msg_manager.send_msgs_to_discord" href="#src.application.utils.msg_manager.send_msgs_to_discord">send_msgs_to_discord</a></code></li>
+<li><code><a title="src.application.utils.msg_manager.split_record_by_category" href="#src.application.utils.msg_manager.split_record_by_category">split_record_by_category</a></code></li>
 </ul>
 </li>
 </ul>
