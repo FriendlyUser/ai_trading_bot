@@ -47,8 +47,9 @@ def RunFuncAndHandleException(func):
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            self._logger.debug("ERROR OCCURED")
-            self._logger.debug("Error Occurred", {
+            func_name = func.__name__
+            message = f"[HandleException][{func_name}]"
+            self._logger.debug(message, {
                 "error": str(e),
                 "type": str(exc_type),
                 'fname': str(fname),

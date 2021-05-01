@@ -18,10 +18,9 @@ def handle_add_record(record: logging.LogRecord):
     if len(record_list) >= 5:
       # split errors and non errors
       # split errors and messages
-      send_msgs_to_discord(record_list)
-      # error_list, other_list = split_record_by_category(record_list)
-      # send_msgs_to_discord(error_list)
-      # send_msgs_to_discord(other_list)
+      error_list, other_list = split_record_by_category(record_list)
+      send_msgs_to_discord(error_list)
+      send_msgs_to_discord(other_list)
       reset_list()
       return None
     if record == None:
