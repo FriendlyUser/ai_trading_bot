@@ -51,7 +51,9 @@ def RunFuncAndHandleException(func):
             self._logger.debug("Error Occurred", {
                 "error": str(e),
                 "type": str(exc_type),
-                'fname': str(fname)
+                'fname': str(fname),
+                'full_error': str(traceback.format_exc())
             })
             reset()
     return _decorator
+t
