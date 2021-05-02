@@ -39,6 +39,7 @@ from statsmodels.tsa.arima.model import ARIMA
 from application.utils.util import reset
 from application.decorators.trading import Timer, RunIfMarketOpen
 from application.utils.state import increment_counter, get_counter
+from application.utils.util import fig_to_buffer
 class EventSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -47,7 +48,6 @@ class EventSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
 
     # handles events that occur on each iteration
     async def handle_timed_events():
@@ -56,7 +56,17 @@ class EventSystem:
             pass
         elif counter % 5 == 0:
             pass
-        pass</code></pre>
+        pass
+
+    async def plot_index(stock: str):
+        data = self._yahoo_repository.get_finance_data(index, &#39;5d&#39;, &#39;15m&#39;)
+        plt.title(f&#34;{index} - for 5 days&#34;)
+        plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
+        plt.xlabel(f&#34;{stock}&#34;)
+        plt.ylabel(&#34;Date&#34;)
+        fig = plt.gcf()
+        plt_data = fig_to_buffer(fig)
+        return plt_data</code></pre>
 </details>
 </section>
 <section>
@@ -86,7 +96,6 @@ class EventSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
 
     # handles events that occur on each iteration
     async def handle_timed_events():
@@ -95,7 +104,17 @@ class EventSystem:
             pass
         elif counter % 5 == 0:
             pass
-        pass</code></pre>
+        pass
+
+    async def plot_index(stock: str):
+        data = self._yahoo_repository.get_finance_data(index, &#39;5d&#39;, &#39;15m&#39;)
+        plt.title(f&#34;{index} - for 5 days&#34;)
+        plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
+        plt.xlabel(f&#34;{stock}&#34;)
+        plt.ylabel(&#34;Date&#34;)
+        fig = plt.gcf()
+        plt_data = fig_to_buffer(fig)
+        return plt_data</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -115,6 +134,26 @@ class EventSystem:
     elif counter % 5 == 0:
         pass
     pass</code></pre>
+</details>
+</dd>
+<dt id="src.application.actions.event_system.EventSystem.plot_index"><code class="name flex">
+<span>async def <span class="ident">plot_index</span></span>(<span>stock: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def plot_index(stock: str):
+    data = self._yahoo_repository.get_finance_data(index, &#39;5d&#39;, &#39;15m&#39;)
+    plt.title(f&#34;{index} - for 5 days&#34;)
+    plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
+    plt.xlabel(f&#34;{stock}&#34;)
+    plt.ylabel(&#34;Date&#34;)
+    fig = plt.gcf()
+    plt_data = fig_to_buffer(fig)
+    return plt_data</code></pre>
 </details>
 </dd>
 </dl>
@@ -139,6 +178,7 @@ class EventSystem:
 <h4><code><a title="src.application.actions.event_system.EventSystem" href="#src.application.actions.event_system.EventSystem">EventSystem</a></code></h4>
 <ul class="">
 <li><code><a title="src.application.actions.event_system.EventSystem.handle_timed_events" href="#src.application.actions.event_system.EventSystem.handle_timed_events">handle_timed_events</a></code></li>
+<li><code><a title="src.application.actions.event_system.EventSystem.plot_index" href="#src.application.actions.event_system.EventSystem.plot_index">plot_index</a></code></li>
 </ul>
 </li>
 </ul>

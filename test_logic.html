@@ -41,8 +41,7 @@ def get_finance_data(stock=&#34;^GSPC&#34;, period=&#39;5d&#39;, interval=&#34;1
     df.set_index(&#39;date&#39;, inplace=True)
     return df
 
-data = get_finance_data(&#34;^GSPC&#34;, &#39;5d&#39;, &#39;5m&#39;)
-print(data.columns)
+data = get_finance_data(&#34;^GSPC&#34;, &#39;5d&#39;, &#39;15m&#39;)
 plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
 fig = plt.gcf()
 data = fig_to_buffer(fig)
