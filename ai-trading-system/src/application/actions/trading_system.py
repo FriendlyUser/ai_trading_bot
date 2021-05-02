@@ -8,7 +8,7 @@ from application.utils.util import reset, fig_to_buffer
 from application.decorators.trading import Timer, RunIfMarketOpen, RunFuncAndHandleException
 from application.utils.state import increment_counter, get_counter
 from application.utils.msg_manager import send_image
-from appication.actions.event_system import EventSystem
+from application.actions.event_system import EventSystem
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
