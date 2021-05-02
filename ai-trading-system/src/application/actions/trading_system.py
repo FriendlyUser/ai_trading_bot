@@ -17,8 +17,8 @@ class TradingSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system  = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
         self._stocks = ["^GSPC"]
+        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository)
 
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
@@ -52,7 +52,6 @@ class TradingSystem:
         increment_counter()
         await self.handle_timed_events()
 
-    @RunFuncAndHandleException
     # handles events that occur on each iteration
     async def handle_timed_events(self):
 
@@ -60,7 +59,7 @@ class TradingSystem:
         indicies = ["^IXIC", "^RUT", "DOW"]
         if counter % 2 == 0:
             for index in indicies:
-                plt_data = self._event_system.plot_index(index)
+                plt_data = await self._event_system.plot_index(index)
                 send_image(plt_data)
             pass
         else:

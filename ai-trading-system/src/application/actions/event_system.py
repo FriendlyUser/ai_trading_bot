@@ -2,16 +2,10 @@
 # for example, every 10 iterations
 # analyze the S&P 500 and/or nasdaq
 # or grab news from server
-import asyncio
-
-import pandas as pd
-import numpy as np
-
-from statsmodels.tsa.arima.model import ARIMA
-from application.utils.util import reset
-from application.decorators.trading import Timer, RunIfMarketOpen
-from application.utils.state import increment_counter, get_counter
+import matplotlib.pyplot as plt
+from application.utils.state import get_counter
 from application.utils.util import fig_to_buffer
+from matplotlib.dates import DateFormatter, WeekdayLocator, MO, WE, FR
 class EventSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -30,13 +24,22 @@ class EventSystem:
             pass
         pass
 
-    async def plot_index(stock: str):
-        data = self._yahoo_repository.get_finance_data(index, '5d', '15m')
-        plt.title(f"{index} - for 5 days")
+    async def plot_index(self, stock: str):
+        data = self._yahoo_repository.get_finance_data(stock, '5d', '15m')
         plt.plot(data["plt_date"], data["Close"])
-        plt.xlabel(f"{stock}")
-        plt.ylabel("Date")
+        plt.title(f"{stock} - for 5 days")
+        plt.ylabel(f"Price of {stock}")
+        plt.xlabel("Date")
+        fig = plt.gcf()
+        ax = fig.get_axes()[0]
+        # Define the date format
+        date_form = DateFormatter("%m-%d")
+        ax.xaxis.set_major_formatter(date_form)
+
+        # Ensure a major tick for each week using (interval=1) 
+        ax.xaxis.set_major_locator(WeekdayLocator(byweekday=(MO, WE, FR)))
         fig = plt.gcf()
         plt_data = fig_to_buffer(fig)
+        fig.clear()
         return plt_data
 

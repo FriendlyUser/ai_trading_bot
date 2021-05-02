@@ -5,5 +5,5 @@ class YahooRepository:
 
         self._yahoo_client = yahoo_client
 
-    def get_finance_data(self, stock="^GSPC"):
+    def get_finance_data(self, stock="^GSPC", period='5d', interval="1m"):
         return self._yahoo_client.get_finance_data(stock)
