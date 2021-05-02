@@ -12,7 +12,6 @@ from application.utils.util import reset
 from application.decorators.trading import Timer, RunIfMarketOpen
 from application.utils.state import increment_counter, get_counter
 from application.utils.util import fig_to_buffer
-from appication.actions.event_system import EventSystem
 class EventSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -21,7 +20,6 @@ class EventSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
 
     # handles events that occur on each iteration
     async def handle_timed_events():

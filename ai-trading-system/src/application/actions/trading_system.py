@@ -8,6 +8,7 @@ from application.utils.util import reset, fig_to_buffer
 from application.decorators.trading import Timer, RunIfMarketOpen, RunFuncAndHandleException
 from application.utils.state import increment_counter, get_counter
 from application.utils.msg_manager import send_image
+from appication.actions.event_system import EventSystem
 class TradingSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -16,7 +17,7 @@ class TradingSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system  = yahoo_repository
+        self._event_system  = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
         self._stocks = ["^GSPC"]
 
     async def monitoring(self, seconds, exec_on_start):
@@ -51,6 +52,7 @@ class TradingSystem:
         increment_counter()
         await self.handle_timed_events()
 
+    @RunFuncAndHandleException
     # handles events that occur on each iteration
     async def handle_timed_events(self):
 
