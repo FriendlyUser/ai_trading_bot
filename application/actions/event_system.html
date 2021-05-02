@@ -30,16 +30,10 @@
 # for example, every 10 iterations
 # analyze the S&amp;P 500 and/or nasdaq
 # or grab news from server
-import asyncio
-
-import pandas as pd
-import numpy as np
-
-from statsmodels.tsa.arima.model import ARIMA
-from application.utils.util import reset
-from application.decorators.trading import Timer, RunIfMarketOpen
-from application.utils.state import increment_counter, get_counter
+import matplotlib.pyplot as plt
+from application.utils.state import get_counter
 from application.utils.util import fig_to_buffer
+from matplotlib.dates import DateFormatter, WeekdayLocator, MO, WE, FR
 class EventSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
         
@@ -58,14 +52,23 @@ class EventSystem:
             pass
         pass
 
-    async def plot_index(stock: str):
-        data = self._yahoo_repository.get_finance_data(index, &#39;5d&#39;, &#39;15m&#39;)
-        plt.title(f&#34;{index} - for 5 days&#34;)
+    async def plot_index(self, stock: str):
+        data = self._yahoo_repository.get_finance_data(stock, &#39;5d&#39;, &#39;15m&#39;)
         plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
-        plt.xlabel(f&#34;{stock}&#34;)
-        plt.ylabel(&#34;Date&#34;)
+        plt.title(f&#34;{stock} - for 5 days&#34;)
+        plt.ylabel(f&#34;Price of {stock}&#34;)
+        plt.xlabel(&#34;Date&#34;)
+        fig = plt.gcf()
+        ax = fig.get_axes()[0]
+        # Define the date format
+        date_form = DateFormatter(&#34;%m-%d&#34;)
+        ax.xaxis.set_major_formatter(date_form)
+
+        # Ensure a major tick for each week using (interval=1) 
+        ax.xaxis.set_major_locator(WeekdayLocator(byweekday=(MO, WE, FR)))
         fig = plt.gcf()
         plt_data = fig_to_buffer(fig)
+        fig.clear()
         return plt_data</code></pre>
 </details>
 </section>
@@ -106,14 +109,23 @@ class EventSystem:
             pass
         pass
 
-    async def plot_index(stock: str):
-        data = self._yahoo_repository.get_finance_data(index, &#39;5d&#39;, &#39;15m&#39;)
-        plt.title(f&#34;{index} - for 5 days&#34;)
+    async def plot_index(self, stock: str):
+        data = self._yahoo_repository.get_finance_data(stock, &#39;5d&#39;, &#39;15m&#39;)
         plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
-        plt.xlabel(f&#34;{stock}&#34;)
-        plt.ylabel(&#34;Date&#34;)
+        plt.title(f&#34;{stock} - for 5 days&#34;)
+        plt.ylabel(f&#34;Price of {stock}&#34;)
+        plt.xlabel(&#34;Date&#34;)
+        fig = plt.gcf()
+        ax = fig.get_axes()[0]
+        # Define the date format
+        date_form = DateFormatter(&#34;%m-%d&#34;)
+        ax.xaxis.set_major_formatter(date_form)
+
+        # Ensure a major tick for each week using (interval=1) 
+        ax.xaxis.set_major_locator(WeekdayLocator(byweekday=(MO, WE, FR)))
         fig = plt.gcf()
         plt_data = fig_to_buffer(fig)
+        fig.clear()
         return plt_data</code></pre>
 </details>
 <h3>Methods</h3>
@@ -137,7 +149,7 @@ class EventSystem:
 </details>
 </dd>
 <dt id="src.application.actions.event_system.EventSystem.plot_index"><code class="name flex">
-<span>async def <span class="ident">plot_index</span></span>(<span>stock: str)</span>
+<span>async def <span class="ident">plot_index</span></span>(<span>self, stock: str)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -145,14 +157,23 @@ class EventSystem:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">async def plot_index(stock: str):
-    data = self._yahoo_repository.get_finance_data(index, &#39;5d&#39;, &#39;15m&#39;)
-    plt.title(f&#34;{index} - for 5 days&#34;)
+<pre><code class="python">async def plot_index(self, stock: str):
+    data = self._yahoo_repository.get_finance_data(stock, &#39;5d&#39;, &#39;15m&#39;)
     plt.plot(data[&#34;plt_date&#34;], data[&#34;Close&#34;])
-    plt.xlabel(f&#34;{stock}&#34;)
-    plt.ylabel(&#34;Date&#34;)
+    plt.title(f&#34;{stock} - for 5 days&#34;)
+    plt.ylabel(f&#34;Price of {stock}&#34;)
+    plt.xlabel(&#34;Date&#34;)
+    fig = plt.gcf()
+    ax = fig.get_axes()[0]
+    # Define the date format
+    date_form = DateFormatter(&#34;%m-%d&#34;)
+    ax.xaxis.set_major_formatter(date_form)
+
+    # Ensure a major tick for each week using (interval=1) 
+    ax.xaxis.set_major_locator(WeekdayLocator(byweekday=(MO, WE, FR)))
     fig = plt.gcf()
     plt_data = fig_to_buffer(fig)
+    fig.clear()
     return plt_data</code></pre>
 </details>
 </dd>

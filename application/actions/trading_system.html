@@ -45,8 +45,8 @@ class TradingSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system  = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
         self._stocks = [&#34;^GSPC&#34;]
+        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository)
 
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
@@ -80,7 +80,6 @@ class TradingSystem:
         increment_counter()
         await self.handle_timed_events()
 
-    @RunFuncAndHandleException
     # handles events that occur on each iteration
     async def handle_timed_events(self):
 
@@ -88,7 +87,7 @@ class TradingSystem:
         indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
         if counter % 2 == 0:
             for index in indicies:
-                plt_data = self._event_system.plot_index(index)
+                plt_data = await self._event_system.plot_index(index)
                 send_image(plt_data)
             pass
         else:
@@ -125,8 +124,8 @@ class TradingSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._event_system  = EventSystem(logger, config, yahoo_repository, ai_repository,alpaca_repository)
         self._stocks = [&#34;^GSPC&#34;]
+        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository)
 
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
@@ -160,7 +159,6 @@ class TradingSystem:
         increment_counter()
         await self.handle_timed_events()
 
-    @RunFuncAndHandleException
     # handles events that occur on each iteration
     async def handle_timed_events(self):
 
@@ -168,7 +166,7 @@ class TradingSystem:
         indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
         if counter % 2 == 0:
             for index in indicies:
-                plt_data = self._event_system.plot_index(index)
+                plt_data = await self._event_system.plot_index(index)
                 send_image(plt_data)
             pass
         else:
@@ -180,7 +178,7 @@ class TradingSystem:
 <h3>Methods</h3>
 <dl>
 <dt id="src.application.actions.trading_system.TradingSystem.handle_timed_events"><code class="name flex">
-<span>async def <span class="ident">handle_timed_events</span></span>(<span>self, *args, **kwargs)</span>
+<span>async def <span class="ident">handle_timed_events</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -188,22 +186,20 @@ class TradingSystem:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">async def _decorator(self, *args, **kwargs):
-    try:
-        result = await func(self, *args, **kwargs)
-        return result
-    except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        func_name = func.__name__
-        message = f&#34;[HandleException][{func_name}]&#34;
-        self._logger.debug(message, {
-            &#34;error&#34;: str(e),
-            &#34;type&#34;: str(exc_type),
-            &#39;fname&#39;: str(fname),
-            &#39;full_error&#39;: str(traceback.format_exc())
-        })
-        reset()</code></pre>
+<pre><code class="python">async def handle_timed_events(self):
+
+    counter = get_counter()
+    indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
+    if counter % 2 == 0:
+        for index in indicies:
+            plt_data = await self._event_system.plot_index(index)
+            send_image(plt_data)
+        pass
+    else:
+        pass
+    if counter % 5 == 0:
+        pass
+    pass</code></pre>
 </details>
 </dd>
 <dt id="src.application.actions.trading_system.TradingSystem.handle_trading"><code class="name flex">
