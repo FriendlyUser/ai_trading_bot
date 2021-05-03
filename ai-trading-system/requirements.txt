@@ -7,4 +7,4 @@ matplotlib==3.3.3
 alpaca-trade-api==0.51.0
 requests==2.25.1
 Flask==1.1.2
-pandas-ta==0.2.45b
+pandas-ta==git+https://github.com/twopirllc/pandas-ta
