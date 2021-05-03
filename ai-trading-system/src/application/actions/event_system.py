@@ -7,13 +7,14 @@ from application.utils.state import get_counter
 from application.utils.util import fig_to_buffer
 from matplotlib.dates import DateFormatter, WeekdayLocator, MO, WE, FR
 class EventSystem:
-    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository):
         
         self._config = config
         self._logger = logger
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
+        self._ta_repository = ta_repository
 
     # handles events that occur on each iteration
     async def handle_timed_events():
@@ -42,4 +43,15 @@ class EventSystem:
         plt_data = fig_to_buffer(fig)
         fig.clear()
         return plt_data
+
+    async def get_ta_for_ticker(self, stock: str):
+        df = self._ta_repository.momentum_stock_ta(stock)
+        latest_rsi = df["RSI_14"][0]
+        latest_roc = df["ROC_10"][0]
+        # send logging to discord here
+        self._logger.info(f"{stock} - index", {
+            "latest_rsi": f"{latest_rsi:.2f}",   
+            "latest_roc": f"{latest_roc:.2f}",
+        })
+        return None
 

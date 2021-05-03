@@ -5,14 +5,14 @@ import random
 
 LOG_CONFIG = {
     'name': 'ai-trading-bridge',
-    'level': logging.DEBUG,
+    'level': logging.INFO,
     'stream_handler': logging.StreamHandler(sys.stdout),
     'format': '%(asctime)s: %(module)s: %(levelname)s: %(message)s'
 }
 
 POLLING_CONFIG = {
     # 'yahoo_interval': 3000,
-    'yahoo_interval': 60*2,
+    'yahoo_interval': 60*20,
 }
 
 ALPACA_CONFIG = {

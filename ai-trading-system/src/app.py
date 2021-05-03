@@ -1,12 +1,16 @@
 import asyncio
 
+# TODO import from clients, use __init__.py
 from application.clients.logger_client import LoggerClient
 from application.clients.yahoo_client import YahooClient
 from application.clients.alpaca_client import AlpacaClient
 from application.clients.ai_client import AIClient
+from application.clients.ta_client import TAClient
+# TODO import from repositories, use __init__.py
 from application.repositories.yahoo_repository import YahooRepository
 from application.repositories.alpaca_repository import AlpacaRepository
 from application.repositories.ai_repository import AIRepository
+from application.repositories.ta_repository import TARepository
 from application.actions.trading_system import TradingSystem
 from application import __version__
 from application.utils.util import read_disk_image
@@ -28,8 +32,13 @@ class Container:
         self._ai_repository = AIRepository(self._logger, config, self._ai_client)
         self._alpaca_client = AlpacaClient(self._logger, config)
         self._alpaca_repository = AlpacaRepository(self._logger, config, self._alpaca_client)
+        self._ta_client = TAClient(self._logger, config)
+        self._ta_repository = TARepository(self._logger, config, self._ta_client)
         self._trading_system = TradingSystem(
-            self._logger, config, self._yahoo_repository, self._ai_repository, self._alpaca_repository)
+            self._logger, config, self._yahoo_repository, 
+            self._ai_repository, self._alpaca_repository, 
+            self._ta_repository
+        )
 
     async def start_monitoring(self):
         """Main loop to monitor stock market"""

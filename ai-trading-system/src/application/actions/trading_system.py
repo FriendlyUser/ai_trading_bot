@@ -10,7 +10,11 @@ from application.utils.state import increment_counter, get_counter
 from application.utils.msg_manager import send_image
 from application.actions.event_system import EventSystem
 class TradingSystem:
-    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+    def __init__(self, logger, config, 
+        yahoo_repository, ai_repository, 
+        alpaca_repository,
+        ta_repository
+        ):
         
         self._config = config
         self._logger = logger
@@ -18,7 +22,8 @@ class TradingSystem:
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
         self._stocks = ["^GSPC"]
-        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository)
+        self._ta_repository = ta_repository
+        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository)
 
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
@@ -61,6 +66,8 @@ class TradingSystem:
             for index in indicies:
                 plt_data = await self._event_system.plot_index(index)
                 send_image(plt_data)
+                await self._event_system.get_ta_for_ticker(index)
+                # perform ta analysis
             pass
         else:
             pass
