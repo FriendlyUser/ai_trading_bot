@@ -60,12 +60,17 @@ class TAClient:
         df = pd.DataFrame() # Empty DataFrame
         new_df = df.ta.ticker(stock)
 
-        # Calculate Returns and append to the df DataFrame
+        # Calculate TA numbes
         new_df.ta.strategy(category, append=&#34;true&#34;)
 
         return new_df
 
-    # todo custom strategies with only the attributes I care about</code></pre>
+    # uses input df and appends ta numbers
+    def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
+
+        # Calculate TA numbers
+        df.ta.strategy(category, append=&#34;true&#34;)
+        return new_df</code></pre>
 </details>
 </section>
 <section>
@@ -98,12 +103,17 @@ class TAClient:
         df = pd.DataFrame() # Empty DataFrame
         new_df = df.ta.ticker(stock)
 
-        # Calculate Returns and append to the df DataFrame
+        # Calculate TA numbes
         new_df.ta.strategy(category, append=&#34;true&#34;)
 
         return new_df
 
-    # todo custom strategies with only the attributes I care about</code></pre>
+    # uses input df and appends ta numbers
+    def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
+
+        # Calculate TA numbers
+        df.ta.strategy(category, append=&#34;true&#34;)
+        return new_df</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -121,9 +131,25 @@ class TAClient:
     df = pd.DataFrame() # Empty DataFrame
     new_df = df.ta.ticker(stock)
 
-    # Calculate Returns and append to the df DataFrame
+    # Calculate TA numbes
     new_df.ta.strategy(category, append=&#34;true&#34;)
 
+    return new_df</code></pre>
+</details>
+</dd>
+<dt id="src.application.clients.ta_client.TAClient.stock_ta_for_cat_df"><code class="name flex">
+<span>def <span class="ident">stock_ta_for_cat_df</span></span>(<span>self, df: pandas.core.frame.DataFrame, category: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
+
+    # Calculate TA numbers
+    df.ta.strategy(category, append=&#34;true&#34;)
     return new_df</code></pre>
 </details>
 </dd>
@@ -149,6 +175,7 @@ class TAClient:
 <h4><code><a title="src.application.clients.ta_client.TAClient" href="#src.application.clients.ta_client.TAClient">TAClient</a></code></h4>
 <ul class="">
 <li><code><a title="src.application.clients.ta_client.TAClient.stock_ta_for_cat" href="#src.application.clients.ta_client.TAClient.stock_ta_for_cat">stock_ta_for_cat</a></code></li>
+<li><code><a title="src.application.clients.ta_client.TAClient.stock_ta_for_cat_df" href="#src.application.clients.ta_client.TAClient.stock_ta_for_cat_df">stock_ta_for_cat_df</a></code></li>
 </ul>
 </li>
 </ul>
