@@ -34,11 +34,11 @@ class TARepository:
         self._ta_client = ta_client
 
     def stock_ta_for_cat(self, stock: str = &#34;aapl&#34;, category=&#34;momentum&#34;):
-        return self.ta_client.stock_ta_for_cat(stock)
+        return self.ta_client.stock_ta_for_cat(stock, category)
 
     # returns the last row with all the TA characteristics
     def momentum_stock_ta(self, stock: str = &#34;^GSPC&#34;):
-        df = self.ta_client.stock_ta_for_cat(stock)
+        df = self.ta_client.stock_ta_for_cat(stock, &#34;momentum&#34;)
         df_interest = df[[&#34;RSI_14&#34;, &#34;RSX_14&#34;, &#34;RVGI_14_4&#34;, &#34;ROC_10&#34;]]
         last_row = df_interest.iloc[[-1]]
         return last_row
@@ -72,11 +72,11 @@ class TARepository:
         self._ta_client = ta_client
 
     def stock_ta_for_cat(self, stock: str = &#34;aapl&#34;, category=&#34;momentum&#34;):
-        return self.ta_client.stock_ta_for_cat(stock)
+        return self.ta_client.stock_ta_for_cat(stock, category)
 
     # returns the last row with all the TA characteristics
     def momentum_stock_ta(self, stock: str = &#34;^GSPC&#34;):
-        df = self.ta_client.stock_ta_for_cat(stock)
+        df = self.ta_client.stock_ta_for_cat(stock, &#34;momentum&#34;)
         df_interest = df[[&#34;RSI_14&#34;, &#34;RSX_14&#34;, &#34;RVGI_14_4&#34;, &#34;ROC_10&#34;]]
         last_row = df_interest.iloc[[-1]]
         return last_row
@@ -95,7 +95,7 @@ class TARepository:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def momentum_stock_ta(self, stock: str = &#34;^GSPC&#34;):
-    df = self.ta_client.stock_ta_for_cat(stock)
+    df = self.ta_client.stock_ta_for_cat(stock, &#34;momentum&#34;)
     df_interest = df[[&#34;RSI_14&#34;, &#34;RSX_14&#34;, &#34;RVGI_14_4&#34;, &#34;ROC_10&#34;]]
     last_row = df_interest.iloc[[-1]]
     return last_row</code></pre>
@@ -111,7 +111,7 @@ class TARepository:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def stock_ta_for_cat(self, stock: str = &#34;aapl&#34;, category=&#34;momentum&#34;):
-    return self.ta_client.stock_ta_for_cat(stock)</code></pre>
+    return self.ta_client.stock_ta_for_cat(stock, category)</code></pre>
 </details>
 </dd>
 </dl>
