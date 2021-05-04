@@ -69,7 +69,7 @@ class TAClient:
     def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
 
         # Calculate TA numbers
-        df.ta.strategy(category, append=&#34;true&#34;)
+        new_df = df.ta.strategy(category, append=&#34;true&#34;)
         return new_df</code></pre>
 </details>
 </section>
@@ -112,7 +112,7 @@ class TAClient:
     def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
 
         # Calculate TA numbers
-        df.ta.strategy(category, append=&#34;true&#34;)
+        new_df = df.ta.strategy(category, append=&#34;true&#34;)
         return new_df</code></pre>
 </details>
 <h3>Methods</h3>
@@ -149,7 +149,7 @@ class TAClient:
 <pre><code class="python">def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
 
     # Calculate TA numbers
-    df.ta.strategy(category, append=&#34;true&#34;)
+    new_df = df.ta.strategy(category, append=&#34;true&#34;)
     return new_df</code></pre>
 </details>
 </dd>
