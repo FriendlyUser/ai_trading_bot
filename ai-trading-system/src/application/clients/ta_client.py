@@ -41,5 +41,5 @@ class TAClient:
     def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
 
         # Calculate TA numbers
-        df.ta.strategy(category, append="true")
+        new_df = df.ta.strategy(category, append="true")
         return new_df
