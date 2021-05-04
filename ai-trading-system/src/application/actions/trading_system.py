@@ -39,6 +39,8 @@ class TradingSystem:
     # right now they only perform timing and tracking
     @RunIfMarketOpen
     @Timer
+    # TODO consider moving RUNFUNCANDHANDLEEXCEPTION PER STOCK
+    # CHANGE CONFIGURATION FOR STOCKS
     @RunFuncAndHandleException
     async def handle_trading(self):
         # scanning S&P 500
