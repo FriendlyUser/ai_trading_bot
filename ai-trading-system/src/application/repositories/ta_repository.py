@@ -14,3 +14,5 @@ class TARepository:
         df_interest = df[["RSI_14", "RSX_14", "RVGI_14_4", "ROC_10"]]
         last_row = df_interest.iloc[[-1]]
         return last_row
+
+    # TODO momentum stock ta df - input df

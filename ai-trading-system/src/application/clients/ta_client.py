@@ -32,9 +32,14 @@ class TAClient:
         df = pd.DataFrame() # Empty DataFrame
         new_df = df.ta.ticker(stock)
 
-        # Calculate Returns and append to the df DataFrame
+        # Calculate TA numbes
         new_df.ta.strategy(category, append="true")
 
         return new_df
 
-    # todo custom strategies with only the attributes I care about
+    # uses input df and appends ta numbers
+    def stock_ta_for_cat_df(self, df: pd.DataFrame, category: str):
+
+        # Calculate TA numbers
+        df.ta.strategy(category, append="true")
+        return new_df
