@@ -100,12 +100,9 @@ def post_image_to_discord(url: str, file: str, filename: str = 'file'):
   try:
       result.raise_for_status()
   except requests.exceptions.HTTPError as err:
-      # print(err)
-      pass 
-      # print("ERROR")
+      print(err)
   else:
-      pass
-      # print("Image Delivered {}.".format(result.status_code))
+      print("Image Delivered {}.".format(result.status_code))
 
 # TODO add emergency logging
 def post_webhook_content(url: str, embeds: list):
@@ -136,5 +133,6 @@ def map_log_level_to_color(level: str):
         "BUY": "52377",
         "SELL": "11737883",
         "ALERT": "99BADD",
+        "PLOT": "	15299665"
     }
   return switcher.get(level, "29647")

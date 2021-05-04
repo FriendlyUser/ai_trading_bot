@@ -49,11 +49,11 @@ def RunFuncAndHandleException(func):
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             func_name = func.__name__
             message = f"[HandleException][{func_name}]"
-            self._logger.debug(message, {
+            self._logger.warning(message, {
                 "error": str(e),
                 "type": str(exc_type),
                 'fname': str(fname),
                 'full_error': str(traceback.format_exc())
             })
-            reset()
+            return None
     return _decorator

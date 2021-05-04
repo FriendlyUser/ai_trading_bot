@@ -12,6 +12,7 @@ class LoggerClient:
         addLoggingLevel("BUY", 70)
         addLoggingLevel("SELL", 80)
         addLoggingLevel("ALERT", 90)
+        addLoggingLevel("PLOT", 100)
 
     # TODO consider renaming to mk_logger
     def get_logger(self):

@@ -49,7 +49,7 @@ class EventSystem:
         latest_rsi = df["RSI_14"][0]
         latest_roc = df["ROC_10"][0]
         # send logging to discord here
-        self._logger.info(f"{stock} - index", {
+        self._logger.alert(f"{stock} - index", {
             "latest_rsi": f"{latest_rsi:.2f}",   
             "latest_roc": f"{latest_roc:.2f}",
         })

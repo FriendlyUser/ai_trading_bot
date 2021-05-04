@@ -59,7 +59,6 @@ class TradingSystem:
 
     # handles events that occur on each iteration
     async def handle_timed_events(self):
-
         counter = get_counter()
         indicies = ["^IXIC", "^RUT", "DOW"]
         if counter % 2 == 0:
