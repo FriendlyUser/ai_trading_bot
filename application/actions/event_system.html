@@ -35,13 +35,14 @@ from application.utils.state import get_counter
 from application.utils.util import fig_to_buffer
 from matplotlib.dates import DateFormatter, WeekdayLocator, MO, WE, FR
 class EventSystem:
-    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository):
         
         self._config = config
         self._logger = logger
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
+        self._ta_repository = ta_repository
 
     # handles events that occur on each iteration
     async def handle_timed_events():
@@ -69,7 +70,18 @@ class EventSystem:
         fig = plt.gcf()
         plt_data = fig_to_buffer(fig)
         fig.clear()
-        return plt_data</code></pre>
+        return plt_data
+
+    async def get_ta_for_ticker(self, stock: str):
+        df = self._ta_repository.momentum_stock_ta(stock)
+        latest_rsi = df[&#34;RSI_14&#34;][0]
+        latest_roc = df[&#34;ROC_10&#34;][0]
+        # send logging to discord here
+        self._logger.alert(f&#34;{stock} - index&#34;, {
+            &#34;latest_rsi&#34;: f&#34;{latest_rsi:.2f}&#34;,   
+            &#34;latest_roc&#34;: f&#34;{latest_roc:.2f}&#34;,
+        })
+        return None</code></pre>
 </details>
 </section>
 <section>
@@ -83,7 +95,7 @@ class EventSystem:
 <dl>
 <dt id="src.application.actions.event_system.EventSystem"><code class="flex name class">
 <span>class <span class="ident">EventSystem</span></span>
-<span>(</span><span>logger, config, yahoo_repository, ai_repository, alpaca_repository)</span>
+<span>(</span><span>logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -92,13 +104,14 @@ class EventSystem:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class EventSystem:
-    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository):
         
         self._config = config
         self._logger = logger
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
+        self._ta_repository = ta_repository
 
     # handles events that occur on each iteration
     async def handle_timed_events():
@@ -126,10 +139,42 @@ class EventSystem:
         fig = plt.gcf()
         plt_data = fig_to_buffer(fig)
         fig.clear()
-        return plt_data</code></pre>
+        return plt_data
+
+    async def get_ta_for_ticker(self, stock: str):
+        df = self._ta_repository.momentum_stock_ta(stock)
+        latest_rsi = df[&#34;RSI_14&#34;][0]
+        latest_roc = df[&#34;ROC_10&#34;][0]
+        # send logging to discord here
+        self._logger.alert(f&#34;{stock} - index&#34;, {
+            &#34;latest_rsi&#34;: f&#34;{latest_rsi:.2f}&#34;,   
+            &#34;latest_roc&#34;: f&#34;{latest_roc:.2f}&#34;,
+        })
+        return None</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
+<dt id="src.application.actions.event_system.EventSystem.get_ta_for_ticker"><code class="name flex">
+<span>async def <span class="ident">get_ta_for_ticker</span></span>(<span>self, stock: str)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_ta_for_ticker(self, stock: str):
+    df = self._ta_repository.momentum_stock_ta(stock)
+    latest_rsi = df[&#34;RSI_14&#34;][0]
+    latest_roc = df[&#34;ROC_10&#34;][0]
+    # send logging to discord here
+    self._logger.alert(f&#34;{stock} - index&#34;, {
+        &#34;latest_rsi&#34;: f&#34;{latest_rsi:.2f}&#34;,   
+        &#34;latest_roc&#34;: f&#34;{latest_roc:.2f}&#34;,
+    })
+    return None</code></pre>
+</details>
+</dd>
 <dt id="src.application.actions.event_system.EventSystem.handle_timed_events"><code class="name flex">
 <span>async def <span class="ident">handle_timed_events</span></span>(<span>)</span>
 </code></dt>
@@ -198,6 +243,7 @@ class EventSystem:
 <li>
 <h4><code><a title="src.application.actions.event_system.EventSystem" href="#src.application.actions.event_system.EventSystem">EventSystem</a></code></h4>
 <ul class="">
+<li><code><a title="src.application.actions.event_system.EventSystem.get_ta_for_ticker" href="#src.application.actions.event_system.EventSystem.get_ta_for_ticker">get_ta_for_ticker</a></code></li>
 <li><code><a title="src.application.actions.event_system.EventSystem.handle_timed_events" href="#src.application.actions.event_system.EventSystem.handle_timed_events">handle_timed_events</a></code></li>
 <li><code><a title="src.application.actions.event_system.EventSystem.plot_index" href="#src.application.actions.event_system.EventSystem.plot_index">plot_index</a></code></li>
 </ul>

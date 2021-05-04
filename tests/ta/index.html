@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>src.config.config API documentation</title>
+<title>src.tests.ta API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,48 +19,18 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>src.config.config</code></h1>
+<h1 class="title">Module <code>src.tests.ta</code></h1>
 </header>
 <section id="section-intro">
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">import logging
-import os
-import sys
-import random
-
-LOG_CONFIG = {
-    &#39;name&#39;: &#39;ai-trading-bridge&#39;,
-    &#39;level&#39;: logging.INFO,
-    &#39;stream_handler&#39;: logging.StreamHandler(sys.stdout),
-    &#39;format&#39;: &#39;%(asctime)s: %(module)s: %(levelname)s: %(message)s&#39;
-}
-
-POLLING_CONFIG = {
-    # &#39;yahoo_interval&#39;: 3000,
-    &#39;yahoo_interval&#39;: 60*20,
-}
-
-ALPACA_CONFIG = {
-    &#39;key_id&#39;: os.environ[&#39;ALPACA_KEY_ID&#39;],
-    &#39;secret_key&#39;: os.environ[&#39;ALPACA_SECRET_KEY&#39;],
-    # Change to https://api.alpaca.markets for live
-    &#39;base_url&#39;: &#39;https://paper-api.alpaca.markets&#39;
-}
-
-
-TRADING_CONFIG = {
-    &#39;DEBUG&#39;: True
-}
-
-DISCORD_WEBHOOK = os.environ[&#34;DISCORD_TRADING_WEBHOOK&#34;]
-
-PORT = 8080</code></pre>
-</details>
 </section>
 <section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="src.tests.ta.check_ta" href="check_ta.html">src.tests.ta.check_ta</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 </section>
 <section>
 </section>
@@ -77,7 +47,12 @@ PORT = 8080</code></pre>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src.config" href="index.html">src.config</a></code></li>
+<li><code><a title="src.tests" href="../index.html">src.tests</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="src.tests.ta.check_ta" href="check_ta.html">src.tests.ta.check_ta</a></code></li>
 </ul>
 </li>
 </ul>

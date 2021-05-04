@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>src.app API documentation</title>
+<title>src.application.clients.ta_client API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,66 +19,53 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>src.app</code></h1>
+<h1 class="title">Module <code>src.application.clients.ta_client</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import asyncio
+<pre><code class="python">import pandas as pd
+import numpy as np
+import pandas_ta as ta
+from statsmodels.tsa.arima.model import ARIMA
+# categories
+# [&#39;candles&#39;, &#39;cycles&#39;, &#39;momentum&#39;, &#39;overlap&#39;, &#39;performance&#39;, &#39;statistics&#39;, &#39;trend&#39;, &#39;volatility&#39;, &#39;volume&#39;]
 
-# TODO import from clients, use __init__.py
-from application.clients.logger_client import LoggerClient
-from application.clients.yahoo_client import YahooClient
-from application.clients.alpaca_client import AlpacaClient
-from application.clients.ai_client import AIClient
-from application.clients.ta_client import TAClient
-# TODO import from repositories, use __init__.py
-from application.repositories.yahoo_repository import YahooRepository
-from application.repositories.alpaca_repository import AlpacaRepository
-from application.repositories.ai_repository import AIRepository
-from application.repositories.ta_repository import TARepository
-from application.actions.trading_system import TradingSystem
-from application import __version__
-from application.utils.util import read_disk_image
-from application.utils.msg_manager import send_image
-from threading import Timer
-from server import app
-from config import config
-from application import __version__
+#
+#    &#39;AO_5_34&#39;, &#39;APO_12_26&#39;, &#39;BIAS_SMA_26&#39;, &#39;BOP&#39;, &#39;AR_26&#39;, &#39;BR_26&#39;,
+#    &#39;CCI_14_0.015&#39;, &#39;CFO_9&#39;, &#39;CG_10&#39;, &#39;CMO_14&#39;, &#39;COPC_11_14_10&#39;, &#39;CTI_12&#39;,
+#    &#39;ER_10&#39;, &#39;BULLP_13&#39;, &#39;BEARP_13&#39;, &#39;FISHERT_9_1&#39;, &#39;FISHERTs_9_1&#39;,
+#    &#39;INERTIA_20_14&#39;, &#39;K_9_3&#39;, &#39;D_9_3&#39;, &#39;J_9_3&#39;,
+#    &#39;KST_10_15_20_30_10_10_10_15&#39;, &#39;KSTs_9&#39;, &#39;MACD_12_26_9&#39;,
+#    &#39;MACDh_12_26_9&#39;, &#39;MACDs_12_26_9&#39;, &#39;MOM_10&#39;, &#39;PGO_14&#39;, &#39;PPO_12_26_9&#39;,
+#    &#39;PPOh_12_26_9&#39;, &#39;PPOs_12_26_9&#39;, &#39;PSL_12&#39;, &#39;PVO_12_26_9&#39;, &#39;PVOh_12_26_9&#39;,
+#    &#39;PVOs_12_26_9&#39;, &#39;QQE_14_5_4.236&#39;, &#39;QQE_14_5_4.236_RSIMA&#39;,
+#    &#39;QQEl_14_5_4.236&#39;, &#39;QQEs_14_5_4.236&#39;, &#39;ROC_10&#39;, &#39;RSI_14&#39;, &#39;RSX_14&#39;,
+#    &#39;RVGI_14_4&#39;, &#39;RVGIs_14_4&#39;, &#39;SLOPE_1&#39;, &#39;SMI_5_20_5&#39;, &#39;SMIs_5_20_5&#39;,
+#    &#39;SMIo_5_20_5&#39;, &#39;SQZ_20_2.0_20_1.5&#39;, &#39;SQZ_ON&#39;, &#39;SQZ_OFF&#39;, &#39;SQZ_NO&#39;,
+#    &#39;STC_10_12_26_0.5&#39;, &#39;STCmacd_10_12_26_0.5&#39;, &#39;STCstoch_10_12_26_0.5&#39;,
+#    &#39;STOCHk_14_3_3&#39;, &#39;STOCHd_14_3_3&#39;, &#39;STOCHRSIk_14_14_3_3&#39;,
+#    &#39;STOCHRSId_14_14_3_3&#39;, &#39;TRIX_30_9&#39;, &#39;TRIXs_30_9&#39;, &#39;TSI_13_25&#39;,
+#    &#39;UO_7_14_28&#39;, &#39;WILLR_14&#39;
+class TAClient:
+    def __init__(self, logger, config):
+        self._config = config
+        self._logger = logger
 
-class Container:
-    &#34;&#34;&#34;Has access to all repositories and logger&#34;&#34;&#34;
-    def __init__(self):
-        self._logger = LoggerClient(config).get_logger()
-        self._logger.info(&#34;AI trading system starting...&#34;, {&#34;version&#34;: __version__})
+    # Grabs full data from yfinance
+    def stock_ta_for_cat(self, stock: str, category: str):
+        # OR if you have yfinance installed
+        df = pd.DataFrame() # Empty DataFrame
+        new_df = df.ta.ticker(stock)
 
-        self._yahoo_client = YahooClient(self._logger, config)
-        self._yahoo_repository = YahooRepository(self._logger, config, self._yahoo_client)
-        self._ai_client = AIClient(self._logger, config)
-        self._ai_repository = AIRepository(self._logger, config, self._ai_client)
-        self._alpaca_client = AlpacaClient(self._logger, config)
-        self._alpaca_repository = AlpacaRepository(self._logger, config, self._alpaca_client)
-        self._ta_client = TAClient(self._logger, config)
-        self._ta_repository = TARepository(self._logger, config, self._ta_client)
-        self._trading_system = TradingSystem(
-            self._logger, config, self._yahoo_repository, 
-            self._ai_repository, self._alpaca_repository, 
-            self._ta_repository
-        )
+        # Calculate Returns and append to the df DataFrame
+        new_df.ta.strategy(category, append=&#34;true&#34;)
 
-    async def start_monitoring(self):
-        &#34;&#34;&#34;Main loop to monitor stock market&#34;&#34;&#34;
-        await self._trading_system.monitoring(config.POLLING_CONFIG[&#39;yahoo_interval&#39;], exec_on_start=True)
+        return new_df
 
-def start_app():
-    &#34;&#34;&#34;start server app&#34;&#34;&#34;
-    app.run(host=&#39;0.0.0.0&#39;, port=8080)
-
-if __name__ == &#39;__main__&#39;:
-    container = Container()
-    asyncio.run(container.start_monitoring())</code></pre>
+    # todo custom strategies with only the attributes I care about</code></pre>
 </details>
 </section>
 <section>
@@ -86,74 +73,58 @@ if __name__ == &#39;__main__&#39;:
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
-<dl>
-<dt id="src.app.start_app"><code class="name flex">
-<span>def <span class="ident">start_app</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>start server app</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def start_app():
-    &#34;&#34;&#34;start server app&#34;&#34;&#34;
-    app.run(host=&#39;0.0.0.0&#39;, port=8080)</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="src.app.Container"><code class="flex name class">
-<span>class <span class="ident">Container</span></span>
+<dt id="src.application.clients.ta_client.TAClient"><code class="flex name class">
+<span>class <span class="ident">TAClient</span></span>
+<span>(</span><span>logger, config)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Has access to all repositories and logger</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Container:
-    &#34;&#34;&#34;Has access to all repositories and logger&#34;&#34;&#34;
-    def __init__(self):
-        self._logger = LoggerClient(config).get_logger()
-        self._logger.info(&#34;AI trading system starting...&#34;, {&#34;version&#34;: __version__})
+<pre><code class="python">class TAClient:
+    def __init__(self, logger, config):
+        self._config = config
+        self._logger = logger
 
-        self._yahoo_client = YahooClient(self._logger, config)
-        self._yahoo_repository = YahooRepository(self._logger, config, self._yahoo_client)
-        self._ai_client = AIClient(self._logger, config)
-        self._ai_repository = AIRepository(self._logger, config, self._ai_client)
-        self._alpaca_client = AlpacaClient(self._logger, config)
-        self._alpaca_repository = AlpacaRepository(self._logger, config, self._alpaca_client)
-        self._ta_client = TAClient(self._logger, config)
-        self._ta_repository = TARepository(self._logger, config, self._ta_client)
-        self._trading_system = TradingSystem(
-            self._logger, config, self._yahoo_repository, 
-            self._ai_repository, self._alpaca_repository, 
-            self._ta_repository
-        )
+    # Grabs full data from yfinance
+    def stock_ta_for_cat(self, stock: str, category: str):
+        # OR if you have yfinance installed
+        df = pd.DataFrame() # Empty DataFrame
+        new_df = df.ta.ticker(stock)
 
-    async def start_monitoring(self):
-        &#34;&#34;&#34;Main loop to monitor stock market&#34;&#34;&#34;
-        await self._trading_system.monitoring(config.POLLING_CONFIG[&#39;yahoo_interval&#39;], exec_on_start=True)</code></pre>
+        # Calculate Returns and append to the df DataFrame
+        new_df.ta.strategy(category, append=&#34;true&#34;)
+
+        return new_df
+
+    # todo custom strategies with only the attributes I care about</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="src.app.Container.start_monitoring"><code class="name flex">
-<span>async def <span class="ident">start_monitoring</span></span>(<span>self)</span>
+<dt id="src.application.clients.ta_client.TAClient.stock_ta_for_cat"><code class="name flex">
+<span>def <span class="ident">stock_ta_for_cat</span></span>(<span>self, stock: str, category: str)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Main loop to monitor stock market</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">async def start_monitoring(self):
-    &#34;&#34;&#34;Main loop to monitor stock market&#34;&#34;&#34;
-    await self._trading_system.monitoring(config.POLLING_CONFIG[&#39;yahoo_interval&#39;], exec_on_start=True)</code></pre>
+<pre><code class="python">def stock_ta_for_cat(self, stock: str, category: str):
+    # OR if you have yfinance installed
+    df = pd.DataFrame() # Empty DataFrame
+    new_df = df.ta.ticker(stock)
+
+    # Calculate Returns and append to the df DataFrame
+    new_df.ta.strategy(category, append=&#34;true&#34;)
+
+    return new_df</code></pre>
 </details>
 </dd>
 </dl>
@@ -169,20 +140,15 @@ if __name__ == &#39;__main__&#39;:
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src" href="index.html">src</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="src.app.start_app" href="#src.app.start_app">start_app</a></code></li>
+<li><code><a title="src.application.clients" href="index.html">src.application.clients</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="src.app.Container" href="#src.app.Container">Container</a></code></h4>
+<h4><code><a title="src.application.clients.ta_client.TAClient" href="#src.application.clients.ta_client.TAClient">TAClient</a></code></h4>
 <ul class="">
-<li><code><a title="src.app.Container.start_monitoring" href="#src.app.Container.start_monitoring">start_monitoring</a></code></li>
+<li><code><a title="src.application.clients.ta_client.TAClient.stock_ta_for_cat" href="#src.application.clients.ta_client.TAClient.stock_ta_for_cat">stock_ta_for_cat</a></code></li>
 </ul>
 </li>
 </ul>

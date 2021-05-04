@@ -38,7 +38,11 @@ from application.utils.state import increment_counter, get_counter
 from application.utils.msg_manager import send_image
 from application.actions.event_system import EventSystem
 class TradingSystem:
-    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+    def __init__(self, logger, config, 
+        yahoo_repository, ai_repository, 
+        alpaca_repository,
+        ta_repository
+        ):
         
         self._config = config
         self._logger = logger
@@ -46,7 +50,8 @@ class TradingSystem:
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
         self._stocks = [&#34;^GSPC&#34;]
-        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository)
+        self._ta_repository = ta_repository
+        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository)
 
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
@@ -82,13 +87,14 @@ class TradingSystem:
 
     # handles events that occur on each iteration
     async def handle_timed_events(self):
-
         counter = get_counter()
         indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
         if counter % 2 == 0:
             for index in indicies:
                 plt_data = await self._event_system.plot_index(index)
                 send_image(plt_data)
+                await self._event_system.get_ta_for_ticker(index)
+                # perform ta analysis
             pass
         else:
             pass
@@ -108,7 +114,7 @@ class TradingSystem:
 <dl>
 <dt id="src.application.actions.trading_system.TradingSystem"><code class="flex name class">
 <span>class <span class="ident">TradingSystem</span></span>
-<span>(</span><span>logger, config, yahoo_repository, ai_repository, alpaca_repository)</span>
+<span>(</span><span>logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -117,7 +123,11 @@ class TradingSystem:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TradingSystem:
-    def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository):
+    def __init__(self, logger, config, 
+        yahoo_repository, ai_repository, 
+        alpaca_repository,
+        ta_repository
+        ):
         
         self._config = config
         self._logger = logger
@@ -125,7 +135,8 @@ class TradingSystem:
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
         self._stocks = [&#34;^GSPC&#34;]
-        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository)
+        self._ta_repository = ta_repository
+        self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository)
 
     async def monitoring(self, seconds, exec_on_start):
         if not exec_on_start:
@@ -161,13 +172,14 @@ class TradingSystem:
 
     # handles events that occur on each iteration
     async def handle_timed_events(self):
-
         counter = get_counter()
         indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
         if counter % 2 == 0:
             for index in indicies:
                 plt_data = await self._event_system.plot_index(index)
                 send_image(plt_data)
+                await self._event_system.get_ta_for_ticker(index)
+                # perform ta analysis
             pass
         else:
             pass
@@ -187,13 +199,14 @@ class TradingSystem:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">async def handle_timed_events(self):
-
     counter = get_counter()
     indicies = [&#34;^IXIC&#34;, &#34;^RUT&#34;, &#34;DOW&#34;]
     if counter % 2 == 0:
         for index in indicies:
             plt_data = await self._event_system.plot_index(index)
             send_image(plt_data)
+            await self._event_system.get_ta_for_ticker(index)
+            # perform ta analysis
         pass
     else:
         pass

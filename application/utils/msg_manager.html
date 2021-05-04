@@ -128,12 +128,9 @@ def post_image_to_discord(url: str, file: str, filename: str = &#39;file&#39;):
   try:
       result.raise_for_status()
   except requests.exceptions.HTTPError as err:
-      # print(err)
-      pass 
-      # print(&#34;ERROR&#34;)
+      print(err)
   else:
-      pass
-      # print(&#34;Image Delivered {}.&#34;.format(result.status_code))
+      print(&#34;Image Delivered {}.&#34;.format(result.status_code))
 
 # TODO add emergency logging
 def post_webhook_content(url: str, embeds: list):
@@ -164,6 +161,7 @@ def map_log_level_to_color(level: str):
         &#34;BUY&#34;: &#34;52377&#34;,
         &#34;SELL&#34;: &#34;11737883&#34;,
         &#34;ALERT&#34;: &#34;99BADD&#34;,
+        &#34;PLOT&#34;: &#34;       15299665&#34;
     }
   return switcher.get(level, &#34;29647&#34;)</code></pre>
 </details>
@@ -233,6 +231,7 @@ def map_log_level_to_color(level: str):
         &#34;BUY&#34;: &#34;52377&#34;,
         &#34;SELL&#34;: &#34;11737883&#34;,
         &#34;ALERT&#34;: &#34;99BADD&#34;,
+        &#34;PLOT&#34;: &#34;       15299665&#34;
     }
   return switcher.get(level, &#34;29647&#34;)</code></pre>
 </details>
@@ -288,12 +287,9 @@ def map_log_level_to_color(level: str):
   try:
       result.raise_for_status()
   except requests.exceptions.HTTPError as err:
-      # print(err)
-      pass 
-      # print(&#34;ERROR&#34;)
+      print(err)
   else:
-      pass
-      # print(&#34;Image Delivered {}.&#34;.format(result.status_code))</code></pre>
+      print(&#34;Image Delivered {}.&#34;.format(result.status_code))</code></pre>
 </details>
 </dd>
 <dt id="src.application.utils.msg_manager.post_webhook_content"><code class="name flex">

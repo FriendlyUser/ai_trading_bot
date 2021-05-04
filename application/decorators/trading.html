@@ -77,13 +77,13 @@ def RunFuncAndHandleException(func):
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             func_name = func.__name__
             message = f&#34;[HandleException][{func_name}]&#34;
-            self._logger.debug(message, {
+            self._logger.warning(message, {
                 &#34;error&#34;: str(e),
                 &#34;type&#34;: str(exc_type),
                 &#39;fname&#39;: str(fname),
                 &#39;full_error&#39;: str(traceback.format_exc())
             })
-            reset()
+            return None
     return _decorator</code></pre>
 </details>
 </section>
@@ -113,13 +113,13 @@ def RunFuncAndHandleException(func):
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             func_name = func.__name__
             message = f&#34;[HandleException][{func_name}]&#34;
-            self._logger.debug(message, {
+            self._logger.warning(message, {
                 &#34;error&#34;: str(e),
                 &#34;type&#34;: str(exc_type),
                 &#39;fname&#39;: str(fname),
                 &#39;full_error&#39;: str(traceback.format_exc())
             })
-            reset()
+            return None
     return _decorator</code></pre>
 </details>
 </dd>
