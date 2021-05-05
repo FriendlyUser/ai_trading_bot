@@ -58,8 +58,7 @@ class TradingSystem:
             await asyncio.sleep(seconds)
         # load stocks from list
         while True:
-            self._logger.info(&#34;Running main logic&#34;)
-            self._logger.buy(&#34;Trying to buy stocks&#34;)
+            self._logger.info(&#34;[monitoring][main loop]&#34;)
             await self.handle_trading()
             await asyncio.sleep(seconds)
 
@@ -145,8 +144,7 @@ class TradingSystem:
             await asyncio.sleep(seconds)
         # load stocks from list
         while True:
-            self._logger.info(&#34;Running main logic&#34;)
-            self._logger.buy(&#34;Trying to buy stocks&#34;)
+            self._logger.info(&#34;[monitoring][main loop]&#34;)
             await self.handle_trading()
             await asyncio.sleep(seconds)
 
@@ -233,11 +231,9 @@ class TradingSystem:
     market_open = self._alpaca_repository.is_market_open()
     trading_cfg = self._config.TRADING_CONFIG
     if market_open or trading_cfg.get(&#39;DEBUG&#39;, False):
-        self._logger.buy(&#34;Market open&#34;)
         result = await func(self, *args, **kwargs)
         return result
     else:
-        self._logger.debug(&#34;Market closed&#34;)
         # return empty function
         def fun(): 
             pass
@@ -258,8 +254,7 @@ class TradingSystem:
         await asyncio.sleep(seconds)
     # load stocks from list
     while True:
-        self._logger.info(&#34;Running main logic&#34;)
-        self._logger.buy(&#34;Trying to buy stocks&#34;)
+        self._logger.info(&#34;[monitoring][main loop]&#34;)
         await self.handle_trading()
         await asyncio.sleep(seconds)</code></pre>
 </details>

@@ -43,7 +43,7 @@ def get_list():
 def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) &gt;= 5:
+    if len(record_list) &gt;= 8:
       # split errors and non errors
       # split errors and messages
       error_list, other_list = split_record_by_category(record_list)
@@ -199,7 +199,7 @@ def map_log_level_to_color(level: str):
 <pre><code class="python">def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) &gt;= 5:
+    if len(record_list) &gt;= 8:
       # split errors and non errors
       # split errors and messages
       error_list, other_list = split_record_by_category(record_list)
