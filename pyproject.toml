@@ -12,8 +12,10 @@ yfinance = "^0.1.59"
 alpaca-trade-api = "^1.1.0"
 pandas = "^1.2.3"
 flask = "^1.1.2"
+telegram = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
 
 [build-system]
 requires = ["poetry>=1.2"]

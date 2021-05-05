@@ -30,8 +30,7 @@ class TradingSystem:
             await asyncio.sleep(seconds)
         # load stocks from list
         while True:
-            self._logger.info("Running main logic")
-            self._logger.buy("Trying to buy stocks")
+            self._logger.info("[monitoring][main loop]")
             await self.handle_trading()
             await asyncio.sleep(seconds)
 

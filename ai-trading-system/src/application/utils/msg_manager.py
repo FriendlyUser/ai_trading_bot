@@ -15,7 +15,7 @@ def get_list():
 def handle_add_record(record: logging.LogRecord):
     global record_list
     # max list length, convert all records to discord embeds
-    if len(record_list) >= 5:
+    if len(record_list) >= 8:
       # split errors and non errors
       # split errors and messages
       error_list, other_list = split_record_by_category(record_list)

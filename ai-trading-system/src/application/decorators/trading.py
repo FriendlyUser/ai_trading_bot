@@ -4,8 +4,6 @@ import sys
 import os
 from time import time
 from application.utils.util import prettify_time, reset
-from functools import wraps
-
 def Timer(func):
     """ Time execution time
     """
@@ -17,7 +15,7 @@ def Timer(func):
         # util function to map seconds to nice format
         nice_time = prettify_time(end_time-start_time)
         msg = f"Execution of {func.__name__} took {nice_time}"
-        self._logger.debug(msg)
+        # self._logger.debug(msg)
         return result
     return _decorator
 
@@ -28,11 +26,9 @@ def RunIfMarketOpen(func):
         market_open = self._alpaca_repository.is_market_open()
         trading_cfg = self._config.TRADING_CONFIG
         if market_open or trading_cfg.get('DEBUG', False):
-            self._logger.buy("Market open")
             result = await func(self, *args, **kwargs)
             return result
         else:
-            self._logger.debug("Market closed")
             # return empty function
             def fun(): 
                 pass
@@ -55,5 +51,6 @@ def RunFuncAndHandleException(func):
                 'fname': str(fname),
                 'full_error': str(traceback.format_exc())
             })
+            reset()
             return None
     return _decorator
