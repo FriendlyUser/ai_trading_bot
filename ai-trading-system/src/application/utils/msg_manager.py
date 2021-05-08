@@ -68,6 +68,8 @@ def map_record_to_embed(record: logging.LogRecord):
 
 # sends image to correct chat service
 def send_image(image: str, name: str = 'file.png'):
+  """ sends buffer image to discord
+  """
   url = DISCORD_WEBHOOK
   loop_count = get_loop_count()
   delay = loop_count * 5

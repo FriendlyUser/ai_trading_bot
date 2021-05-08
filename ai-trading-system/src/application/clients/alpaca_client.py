@@ -59,3 +59,19 @@ class AlpacaClient:
             return f'Sold {shares} shares.'
         else:
             return f'No shares were bought nor sold.'
+
+    def buy_sell_stock(self, side, symbol, shares):
+        """ 
+        :param side - buy or sell
+        :param symbol - which asset to buy
+        :param shares - how many
+        """
+        if action.lower() == 'buy':
+            api.submit_order(symbol=symbol, qty=shares, side='buy', type='market', time_in_force='day')
+            return f'Bought {shares} shares.'
+        elif action.lower() == 'sell':
+            api.submit_order(symbol=symbol, qty=shares, side='sell', type='market', time_in_force='day')
+            return f'Sold {shares} shares.'
+        else:
+            return f'No shares were bought nor sold.'
+        pass

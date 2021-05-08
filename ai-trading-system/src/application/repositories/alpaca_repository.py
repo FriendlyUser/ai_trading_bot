@@ -6,3 +6,6 @@ class AlpacaRepository:
 
     def is_market_open(self):
         return self._alpaca_client.is_market_open()
+
+    def buy_sell_stock(self, symbol, shares):
+        return self._alpaca_client.buy_sell_stock(self, symbol, shares)

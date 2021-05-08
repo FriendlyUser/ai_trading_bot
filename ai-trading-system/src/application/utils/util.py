@@ -34,6 +34,8 @@ def read_disk_image():
   return encoded_string
 
 def fig_to_buffer(fig):
+  """ returns a matplotlib figure as a buffer
+  """
   buf = BytesIO()
   fig.savefig(buf, format='png')
   buf.seek(0)
