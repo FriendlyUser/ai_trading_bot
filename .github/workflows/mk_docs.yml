@@ -35,8 +35,7 @@ jobs:
           pip install pdoc
       - name: Build docs
         run: |
-          cd src
-          pdoc . -o docs
+          pdoc src -o docs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
