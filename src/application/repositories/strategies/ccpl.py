@@ -1,8 +1,8 @@
- import numpy as np
- import os
- import csv
+import numpy as np
+import os
+import csv
  
- class CPPI:
+class CPPI:
     """
     The CPPI algorithm class.
     """
