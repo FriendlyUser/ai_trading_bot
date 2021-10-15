@@ -5,9 +5,9 @@ import os
 # sys.path.insert(0,'../../')
 # myPath = os.path.dirname(os.path.abspath(__file__))
 # sys.path.insert(0, myPath + '/../')
-from application.clients.logger_client import LoggerClient
-from application.clients.ta_client import TAClient
-from config import config
+from ai_trading_bot.application.clients.logger_client import LoggerClient
+from ai_trading_bot.application.clients.ta_client import TAClient
+from ai_trading_bot.config import config
 # content of test_sample.py
 def sample_func():
     logger = LoggerClient(config)
