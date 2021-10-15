@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import csv
+import time
  
 class CPPI:
     """
@@ -86,8 +87,7 @@ class CPPI:
             self._check_market_open()
             #re-calculate the CPPI value based on the asset holding returns
             risky_ret, safe_ret = self._check_position()
-            self.cppi_value = risk_alloc*(1 + risky_ret) + safe_alloc*
-                            (1 + safe_ret)
+            self.cppi_value = risk_alloc*(1 + risky_ret) + safe_alloc*(1 + safe_ret)
             #save the tracking metrics
             self.save_cppi_metrics()
 
