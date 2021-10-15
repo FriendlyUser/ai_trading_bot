@@ -32,14 +32,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pdoc3
+          pip install pdoc
       - name: Build docs
         run: |
           cd src
-          pdoc --html .
+          pdoc . -o docs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: src/html/src # The folder the action should deploy.
+          folder: src/docs # The folder the action should deploy.
