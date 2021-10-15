@@ -1,12 +1,9 @@
-name: Deploy docs
+name: Run Tests
 on:
-  push:
-    branches:
-      - master
-      - main
+  push
 
 env:
-  DISCORD_TRADING_WEBHOOK: ${{ secrets.DISCORD_TRADING_WEBHOOK }}
+  DISCORD_TRADING_WEBHOOK: ${secrets.DISCORD_TRADING_WEBHOOK}
   ALPACA_SECRET_KEY: blank
   ALPACA_KEY_ID: blank
 
@@ -35,19 +32,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest
-
-      - name: Coverage Report
+          pip install pdoc3
+      - name: Build docs
         run: |
-          python -m pytest --cov=./ --cov-report=xml
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.15
-        with:
-          file: ./coverage.xml
-          flags: trading_ci
-          env_vars: PYTHON,OS
-          fail_ci_if_error: true
+          cd src
+          pdoc --html .
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
