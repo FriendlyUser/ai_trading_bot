@@ -36,7 +36,7 @@ jobs:
       - name: Build docs
         run: |
           cd ai_trading_bot
-          pdoc -o docs ai_trading_bot || true
+          pdoc -o docs . || true
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
