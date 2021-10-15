@@ -31,15 +31,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r ai-trading-system/requirements.txt
+          pip install -r requirements.txt
           pip install pdoc3
       - name: Build docs
         run: |
-          cd ai-trading-system/src
+          cd src
           pdoc --html .
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: ai-trading-system/src/html/src # The folder the action should deploy.
+          folder: src/html/src # The folder the action should deploy.
