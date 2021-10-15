@@ -1,10 +1,10 @@
 import sys
 import os
-sys.path.insert(0,'..')
-sys.path.insert(0,'../../..')
-sys.path.insert(0,'../../')
-myPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, myPath + '/../')
+# sys.path.insert(0,'..')
+# sys.path.insert(0,'../../..')
+# sys.path.insert(0,'../../')
+# myPath = os.path.dirname(os.path.abspath(__file__))
+# sys.path.insert(0, myPath + '/../')
 from application.clients.logger_client import LoggerClient
 from application.clients.ta_client import TAClient
 from config import config
