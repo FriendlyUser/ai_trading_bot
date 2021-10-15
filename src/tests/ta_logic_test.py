@@ -17,6 +17,6 @@ def sample_func():
     last_row = df_interest.iloc[[-1]]
 
 
-def test_generate():
+def generate_test():
     sample_func()
     assert True
