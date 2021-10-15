@@ -35,10 +35,10 @@ jobs:
           pip install pdoc
       - name: Build docs
         run: |
-          pdoc src -o docs
+          pdoc ai-trading-bot -o docs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: src/docs # The folder the action should deploy.
+          folder: docs # The folder the action should deploy.
