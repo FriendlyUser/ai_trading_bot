@@ -42,16 +42,10 @@ jobs:
         run: |
           python -m pytest --cov=./ --cov-report=xml --cov-fail-under=10
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.15
-        with:
-          file: ./coverage.xml
-          flags: trading_ci
-          env_vars: PYTHON,OS
-          fail_ci_if_error: true
-
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: src/html/src # The folder the action should deploy.
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v1.0.15
+#         with:
+#           file: ./coverage.xml
+#           flags: trading_ci
+#           env_vars: PYTHON,OS
+#           fail_ci_if_error: true
