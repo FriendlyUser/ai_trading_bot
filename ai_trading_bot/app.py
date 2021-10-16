@@ -1,5 +1,10 @@
+"""
+Main App logic
+"""
 import asyncio
-
+from threading import Timer
+from ai_trading_bot.server import app
+from ai_trading_bot.config import config
 # TODO import from clients, use __init__.py
 from ai_trading_bot.application.clients.logger_client import LoggerClient
 from ai_trading_bot.application.clients.yahoo_client import YahooClient
@@ -13,12 +18,8 @@ from ai_trading_bot.application.repositories.ai_repository import AIRepository
 from ai_trading_bot.application.repositories.ta_repository import TARepository
 from ai_trading_bot.application.actions.trading_system import TradingSystem
 from ai_trading_bot.application import __version__
-from ai_trading_bot.application.utils.util import read_disk_image
-from ai_trading_bot.application.utils.msg_manager import send_image
-from threading import Timer
-from server import app
-from config import config
-from ai_trading_bot.application import __version__
+# from ai_trading_bot.application.utils.util import read_disk_image
+# from ai_trading_bot.application.utils.msg_manager import send_image
 
 class Container:
     """Has access to all repositories and logger"""
