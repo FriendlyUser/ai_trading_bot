@@ -3,8 +3,8 @@
 # analyze the S&P 500 and/or nasdaq
 # or grab news from server
 import matplotlib.pyplot as plt
-from application.utils.state import get_counter
-from application.utils.util import fig_to_buffer
+from ai_trading_bot.application.utils.state import get_counter
+from ai_trading_bot.application.utils.util import fig_to_buffer
 from matplotlib.dates import DateFormatter, WeekdayLocator, MO, WE, FR
 class EventSystem:
     def __init__(self, logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository):

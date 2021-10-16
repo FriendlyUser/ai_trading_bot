@@ -1,24 +1,24 @@
 import asyncio
 
 # TODO import from clients, use __init__.py
-from application.clients.logger_client import LoggerClient
-from application.clients.yahoo_client import YahooClient
-from application.clients.alpaca_client import AlpacaClient
-from application.clients.ai_client import AIClient
-from application.clients.ta_client import TAClient
+from ai_trading_bot.application.clients.logger_client import LoggerClient
+from ai_trading_bot.application.clients.yahoo_client import YahooClient
+from ai_trading_bot.application.clients.alpaca_client import AlpacaClient
+from ai_trading_bot.application.clients.ai_client import AIClient
+from ai_trading_bot.application.clients.ta_client import TAClient
 # TODO import from repositories, use __init__.py
-from application.repositories.yahoo_repository import YahooRepository
-from application.repositories.alpaca_repository import AlpacaRepository
-from application.repositories.ai_repository import AIRepository
-from application.repositories.ta_repository import TARepository
-from application.actions.trading_system import TradingSystem
-from application import __version__
-from application.utils.util import read_disk_image
-from application.utils.msg_manager import send_image
+from ai_trading_bot.application.repositories.yahoo_repository import YahooRepository
+from ai_trading_bot.application.repositories.alpaca_repository import AlpacaRepository
+from ai_trading_bot.application.repositories.ai_repository import AIRepository
+from ai_trading_bot.application.repositories.ta_repository import TARepository
+from ai_trading_bot.application.actions.trading_system import TradingSystem
+from ai_trading_bot.application import __version__
+from ai_trading_bot.application.utils.util import read_disk_image
+from ai_trading_bot.application.utils.msg_manager import send_image
 from threading import Timer
 from server import app
 from config import config
-from application import __version__
+from ai_trading_bot.application import __version__
 
 class Container:
     """Has access to all repositories and logger"""

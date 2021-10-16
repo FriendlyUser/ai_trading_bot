@@ -4,11 +4,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
-from application.utils.util import reset, fig_to_buffer
-from application.decorators.trading import Timer, RunIfMarketOpen, RunFuncAndHandleException
-from application.utils.state import increment_counter, get_counter
-from application.utils.msg_manager import send_image
-from application.actions.event_system import EventSystem
+from ai_trading_bot.application.utils.util import reset, fig_to_buffer
+from ai_trading_bot.application.decorators.trading import Timer, RunIfMarketOpen, RunFuncAndHandleException
+from ai_trading_bot.application.utils.state import increment_counter, get_counter
+from ai_trading_bot.application.utils.msg_manager import send_image
+from ai_trading_bot.application.actions.event_system import EventSystem
 class TradingSystem:
     def __init__(self, logger, config, 
         yahoo_repository, ai_repository, 

@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0,'..')
-from application.clients.logger_client import LoggerClient
-from application.clients.ta_client import TAClient
+from ai_trading_bot.application.clients.logger_client import LoggerClient
+from ai_trading_bot.application.clients.ta_client import TAClient
 from config import config
 df = None
 logger = LoggerClient(config)

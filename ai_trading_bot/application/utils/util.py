@@ -3,9 +3,9 @@ import logging
 import base64
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-from application.utils.msg_manager import reset_and_send_list
-from application.utils.state import reset_loop_count
-from application.clients.logger_client import LoggerClient
+from ai_trading_bot.application.utils.msg_manager import reset_and_send_list
+from ai_trading_bot.application.utils.state import reset_loop_count
+from ai_trading_bot.application.clients.logger_client import LoggerClient
 from config import config
 from io import BytesIO
 def reset():

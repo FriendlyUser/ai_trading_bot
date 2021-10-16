@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import yfinance as yf
 import pandas as pd
-from application.utils.util import fig_to_buffer
-from application.utils.msg_manager import send_image
+from ai_trading_bot.application.utils.util import fig_to_buffer
+from ai_trading_bot.application.utils.msg_manager import send_image
 def get_finance_data(stock="^GSPC", period='5d', interval="1m"):
     """Get data from yahoo finance for a particular ticker"""
 

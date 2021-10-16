@@ -2,7 +2,7 @@ import logging
 import requests
 import json
 from config.config import DISCORD_WEBHOOK
-from application.utils.state import get_loop_count, increment_loop_count
+from ai_trading_bot.application.utils.state import get_loop_count, increment_loop_count
 from threading import Timer
 
 # list of records to send to discord

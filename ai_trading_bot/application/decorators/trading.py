@@ -3,7 +3,7 @@ import traceback
 import sys
 import os
 from time import time
-from application.utils.util import prettify_time, reset
+from ai_trading_bot.application.utils.util import prettify_time, reset
 def Timer(func):
     """ Time execution time
     """
