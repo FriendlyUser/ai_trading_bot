@@ -6,6 +6,5 @@ matplotlib==3.3.3
 alpaca-trade-api==0.51.0
 requests==2.25.1
 Flask==1.1.2
-TA-Lib
 git+https://github.com/twopirllc/pandas-ta.git@main
 yfinance==0.1.63
