@@ -1,6 +1,6 @@
 import logging
 from ai_trading_bot.application.utils.discord_logger import Discord_Handler
-from config.config import DISCORD_WEBHOOK
+from ai_trading_bot.config.config import DISCORD_WEBHOOK
 
 
 class LoggerClient:

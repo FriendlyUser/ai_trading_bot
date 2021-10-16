@@ -1,31 +1,31 @@
 import logging
-import requests
 import json
-from ai_trading_bot.config.config import DISCORD_WEBHOOK
+import requests
+from ai_trading_bot.application import DISCORD_WEBHOOK
 from ai_trading_bot.application.utils.state import get_loop_count, increment_loop_count
 from threading import Timer
 
 # list of records to send to discord
-record_list: list = []
+RECORD_LIST: list = []
 
 def get_list():
-    global record_list
-    return record_list
+    global RECORD_LIST
+    return RECORD_LIST
 
 def handle_add_record(record: logging.LogRecord):
-    global record_list
+    global RECORD_LIST
     # max list length, convert all records to discord embeds
-    if len(record_list) >= 8:
+    if len(RECORD_LIST) >= 8:
       # split errors and non errors
       # split errors and messages
-      error_list, other_list = split_record_by_category(record_list)
+      error_list, other_list = split_record_by_category(RECORD_LIST)
       send_msgs_to_discord(error_list)
       send_msgs_to_discord(other_list)
       reset_list()
       return None
     if record == None:
       return None
-    record_list.append(record)
+    RECORD_LIST.append(record)
 
 
 def split_record_by_category(input_record_list: list, category_list: list = ["ERROR"]):
@@ -34,13 +34,13 @@ def split_record_by_category(input_record_list: list, category_list: list = ["ER
   return category_list, other_list
 
 def reset_list():
-    global record_list
-    record_list = []
+    global RECORD_LIST
+    RECORD_LIST = []
 
 # send what records are available and clear list
 def reset_and_send_list():
-    global record_list
-    send_msgs_to_discord(record_list)
+    global RECORD_LIST
+    send_msgs_to_discord(RECORD_LIST)
     reset_list()
 
 def map_record_to_embed(record: logging.LogRecord):
@@ -78,13 +78,13 @@ def send_image(image: str, name: str = 'file.png'):
   increment_loop_count()
 
 # TODO update name to reflect how it should work
-def send_msgs_to_discord(record_list: list, url = DISCORD_WEBHOOK):
-  if len(record_list) == 0:
+def send_msgs_to_discord(RECORD_LIST: list, url = DISCORD_WEBHOOK):
+  if len(RECORD_LIST) == 0:
     return
   # map each record 
   embeds = []
   # split errors into another list
-  for record in record_list:
+  for record in RECORD_LIST:
     embed = map_record_to_embed(record)
     embeds.append(embed)
   loop_count = get_loop_count()
