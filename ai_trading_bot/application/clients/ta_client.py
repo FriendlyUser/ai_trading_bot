@@ -29,8 +29,8 @@ class TAClient:
     # Grabs full data from yfinance
     def stock_ta_for_cat(self, stock: str, category: str):
         # OR if you have yfinance installed
-        df = pd.DataFrame() # Empty DataFrame
-        new_df = df.ta.ticker(stock)
+        new_df = pd.DataFrame() # Empty DataFrame
+        new_df = new_df.ta.ticker(stock)
 
         # Calculate TA numbes
         new_df.ta.strategy(category, append="true")

@@ -12,8 +12,8 @@ from ai_trading_bot.config import config
 def sample_func():
     logger = LoggerClient(config)
     taClient = TAClient(logger,config)
-    df = taClient.stock_ta_for_cat("aapl", "momentum")
-    df_interest = df[["RSI_14", "RSX_14", "RVGI_14_4", "ROC_10"]]
+    new_df = taClient.stock_ta_for_cat("aapl", "momentum")
+    df_interest = new_df[["RSI_14", "RSX_14", "RVGI_14_4", "ROC_10"]]
     last_row = df_interest.iloc[[-1]]
 
 
