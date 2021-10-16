@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from ai_trading_bot.application.utils.msg_manager import reset_and_send_list
 from ai_trading_bot.application.utils.state import reset_loop_count
 from ai_trading_bot.application.clients.logger_client import LoggerClient
-from config import config
+# from ai_trading_bot.config import config
 from io import BytesIO
 def reset():
   """reset the loop iteration for messages and thread delays"""

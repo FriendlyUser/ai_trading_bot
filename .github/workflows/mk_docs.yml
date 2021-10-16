@@ -35,7 +35,7 @@ jobs:
           pip install pdoc
       - name: Build docs
         run: |
-          pdoc -o docs ai_trading_bot || true
+          pdoc -o docs ai_trading_bot
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.1

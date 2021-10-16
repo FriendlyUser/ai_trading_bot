@@ -1,7 +1,7 @@
 import logging
 import json
 import requests
-from ai_trading_bot.application import DISCORD_WEBHOOK
+from ai_trading_bot.config.config import DISCORD_WEBHOOK
 from ai_trading_bot.application.utils.state import get_loop_count, increment_loop_count
 from threading import Timer
 
