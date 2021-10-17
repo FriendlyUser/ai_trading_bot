@@ -199,7 +199,6 @@
     <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="c1"># for all params, see https://discordapp.com/developers/docs/resources/webhook#execute-webhook</span>
     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;embeds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">embeds</span>
-
     <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
         <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
     <span class="p">)</span>
@@ -207,6 +206,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">result</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WHAT THE HECK IS HERE&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Payload delivered successfully, code </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
@@ -494,7 +494,6 @@
     <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="c1"># for all params, see https://discordapp.com/developers/docs/resources/webhook#execute-webhook</span>
     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;embeds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">embeds</span>
-
     <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
         <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
     <span class="p">)</span>
@@ -502,6 +501,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">result</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WHAT THE HECK IS HERE&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Payload delivered successfully, code </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
