@@ -2,8 +2,10 @@
 Main App logic
 """
 import asyncio
+
 import os
-from threading import Timer
+import aiohttp
+from threading import Timer, Thread
 from ai_trading_bot.server import app
 from ai_trading_bot.config import config
 # TODO import from clients, use __init__.py
@@ -43,13 +45,11 @@ class Container:
         )
 
     async def start_monitoring(self):
-        """Main loop to monitor stock market"""
+        runner = aiohttp.web.AppRunner(app)
+        await runner.setup()
+        site = aiohttp.web.TCPSite(runner)    
+        await site.start()
         await self._trading_system.monitoring(config.POLLING_CONFIG['yahoo_interval'], exec_on_start=True)
-
-def start_app():
-    """start server app"""
-    port = os.environ.get("PORT", 8080)
-    app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
     container = Container()

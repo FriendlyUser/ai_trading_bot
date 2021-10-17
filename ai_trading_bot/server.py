@@ -1,11 +1,8 @@
 import logging
-from flask import Flask, render_template
-app = Flask(__name__)
+from aiohttp import web
 
-log = logging.getLogger('werkzeug')
-log.disabled = True
+async def hello(request):
+    return web.Response(text="Hello, world")
 
-@app.route('/')
-def index():
-  """simple index page"""
-  return render_template("index.html")
+app = web.Application()
+app.router.add_get('/', hello)

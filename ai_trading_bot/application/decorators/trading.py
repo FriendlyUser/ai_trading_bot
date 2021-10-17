@@ -48,8 +48,7 @@ def RunFuncAndHandleException(func):
             self._logger.warning(message, {
                 "error": str(e),
                 "type": str(exc_type),
-                'fname': str(fname),
-                'full_error': str(traceback.format_exc())
+                'fname': str(fname)
             })
             reset()
             return None

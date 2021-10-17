@@ -112,7 +112,6 @@ def post_webhook_content(url: str, embeds: list):
     data = {}
     # for all params, see https://discordapp.com/developers/docs/resources/webhook#execute-webhook
     data["embeds"] = embeds
-
     result = requests.post(
         url, data=json.dumps(data), headers={"Content-Type": "application/json"}
     )
@@ -120,6 +119,7 @@ def post_webhook_content(url: str, embeds: list):
     try:
         result.raise_for_status()
     except requests.exceptions.HTTPError as err:
+        print("WHAT THE HECK IS HERE")
         print(err)
     else:
         print("Payload delivered successfully, code {}.".format(result.status_code))
