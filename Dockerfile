@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install gcc npm git -y && apt-get clean
 RUN pip install --upgrade pip
 # install dependencies
 RUN pip install -r requirements.txt
-
-COPY ai_trading_bot .
+COPY ai_trading_bot ai_trading_bot
+COPY main.py .
 
 EXPOSE 8080
 ENV PYTHONUNBUFFERED 1
