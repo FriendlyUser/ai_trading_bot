@@ -13,10 +13,9 @@ RUN pip install -r requirements.txt
 COPY ai_trading_bot .
 
 EXPOSE 8080
-ENV PORT 8080
 ENV PYTHONUNBUFFERED 1
 
-HEALTHCHECK --timeout=30s --interval=1m30s --retries=5 \
-  CMD curl -s --fail http://localhost:8081/_health || exit 1
+# HEALTHCHECK --timeout=30s --interval=1m30s --retries=5 \
+#   CMD curl -s --fail http://localhost:8081/_health || exit 1
 
 CMD ["python3", "-u", "main.py"]
