@@ -70,6 +70,7 @@
 <span class="sd">Main App logic</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Timer</span>
 <span class="kn">from</span> <span class="nn">ai_trading_bot.server</span> <span class="kn">import</span> <span class="n">app</span>
 <span class="kn">from</span> <span class="nn">ai_trading_bot.config</span> <span class="kn">import</span> <span class="n">config</span>
@@ -115,7 +116,8 @@
 
 <span class="k">def</span> <span class="nf">start_app</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;start server app&quot;&quot;&quot;</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">container</span> <span class="o">=</span> <span class="n">Container</span><span class="p">()</span>
@@ -235,7 +237,8 @@
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">start_app</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;start server app&quot;&quot;&quot;</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="mi">8080</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">)</span>
 </pre></div>
 
         </details>
