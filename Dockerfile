@@ -1,6 +1,6 @@
 FROM python:3.8.3-slim
 
-COPY ai-trading-bot/ /service/app
+COPY ai_trading_bot/ /service/app
 
 WORKDIR /service/app
 
