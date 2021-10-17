@@ -2,6 +2,7 @@
 Main App logic
 """
 import asyncio
+import os
 from threading import Timer
 from ai_trading_bot.server import app
 from ai_trading_bot.config import config
@@ -47,7 +48,8 @@ class Container:
 
 def start_app():
     """start server app"""
-    app.run(host='0.0.0.0', port=8080)
+    port = os.environ.get("PORT", 8080)
+    app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
     container = Container()
