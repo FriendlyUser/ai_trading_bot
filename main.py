@@ -2,10 +2,8 @@
 Main App logic
 """
 import asyncio
-
-import os
 import aiohttp
-from threading import Timer, Thread
+
 from ai_trading_bot.server import app
 from ai_trading_bot.config import config
 # TODO import from clients, use __init__.py
