@@ -5,7 +5,7 @@ WORKDIR /service/app
 # copy the dependencies file to the working directory
 COPY requirements.txt .
 
-RUN apt-get update && apt-get install gcc npm -y && apt-get clean
+RUN apt-get update && apt-get install gcc npm git -y && apt-get clean
 RUN pip install --upgrade pip
 # install dependencies
 RUN pip install -r requirements.txt
