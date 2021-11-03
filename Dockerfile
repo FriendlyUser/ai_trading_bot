@@ -20,4 +20,5 @@ ENV PYTHONUNBUFFERED 1
 #   CMD curl -s --fail http://localhost:8081/_health || exit 1
 
 COPY wrapper_script.sh wrapper_script.sh
+RUN chmod +x wrapper_script.sh
 CMD ./wrapper_script.sh
