@@ -22,6 +22,19 @@ self._logger.info("AI trading system starting...", {"version": __version__})
 
 
 
+## Running on gcp
+
+To start in background
+```
+screen -dm python3 main.py -S ai_trading_bot
+```
+
+To reattach
+
+```
+screen -x <screen_name>
+```
+
 ## Task List
 
 - [x] Remove old references
