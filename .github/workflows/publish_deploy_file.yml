@@ -1,18 +1,21 @@
-name: ci
+name: push to docker
 
 
 env:
   VERSION: v0.901
 
 on:
-  push:
-    branches: 
-      - master
-      - main
-    paths-ignore:
-      - '.github/workflows/**'
-    tags:        
-      - '*' # Push events to v1 tag
+  - workflow_dispatch
+
+# on:
+#   push:
+#     branches: 
+#       - master
+#       - main
+#     paths-ignore:
+#       - '.github/workflows/**'
+#     tags:        
+#       - '*' # Push events to v1 tag
 
 jobs:
     build-and-publish-latest:
