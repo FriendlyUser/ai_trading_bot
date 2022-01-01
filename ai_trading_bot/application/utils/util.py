@@ -1,6 +1,3 @@
-import logging
-# importing matplotlib modules
-import base64
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from ai_trading_bot.application.utils.msg_manager import reset_and_send_list

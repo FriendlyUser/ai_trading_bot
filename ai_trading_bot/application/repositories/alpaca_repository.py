@@ -9,3 +9,6 @@ class AlpacaRepository:
 
     def buy_sell_stock(self, symbol, shares):
         return self._alpaca_client.buy_sell_stock(self, symbol, shares)
+
+    def get_barset(self, symbol, interval, limit):
+        return self._alpaca_client.get_barset(self, symbol, interval, limit)

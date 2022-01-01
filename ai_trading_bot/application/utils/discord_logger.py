@@ -1,6 +1,4 @@
 import logging
-import requests
-import json
 from threading import Timer
 from logging import Handler
 from ai_trading_bot.application.utils.msg_manager import handle_add_record

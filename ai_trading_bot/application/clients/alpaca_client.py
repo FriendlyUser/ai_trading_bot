@@ -74,3 +74,7 @@ class AlpacaClient:
             return f'Sold {shares} shares.'
         else:
             return f'No shares were bought nor sold.'
+
+    def get_barset(self, symbol, interval, limit):
+        """get barset for a symbol"""
+        return self._api.get_barset(symbol, interval, limit=limit)
