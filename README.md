@@ -20,8 +20,6 @@ for example
 self._logger.info("AI trading system starting...", {"version": __version__})
 ```
 
-
-
 ## Running on gcp
 
 To start in background
@@ -41,6 +39,7 @@ screen -x <screen_name>
 - [x] discord module for logging. (4/11/2021)
 - [] Basic trading algorthmic, trade if forecast returns promising data
 - [] Various trading strategies that can be turned on and off
+- [] Improve docs
 
 Deployed to `repl.it`@ https://aitradingbot.friendlyuser.repl.co
 
