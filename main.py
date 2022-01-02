@@ -43,6 +43,10 @@ class Container:
         )
 
     async def start_monitoring(self):
+        runner = aiohttp.web.AppRunner(app)
+        await runner.setup()
+        site = aiohttp.web.TCPSite(runner)    
+        await site.start()
         await self._trading_system.monitoring(config.POLLING_CONFIG['yahoo_interval'], exec_on_start=True)
 
 if __name__ == '__main__':
