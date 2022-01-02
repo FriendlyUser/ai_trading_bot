@@ -1,5 +1,7 @@
 # Ai Trading System
 
+This is a simple ai trading system for me to slowly learn how todo algorithmic trading using alpaca paper trades. Like many of the skeptics on algotrading, I doubt I could make money with this and expect to fail 100%.
+
 To run
 ```
 python3.8 ai-trading-system/src/app.py
