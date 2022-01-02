@@ -19,6 +19,7 @@ ENV PYTHONUNBUFFERED 1
 # HEALTHCHECK --timeout=30s --interval=1m30s --retries=5 \
 #   CMD curl -s --fail http://localhost:8081/_health || exit 1
 
-COPY wrapper_script.sh wrapper_script.sh
-RUN chmod +x wrapper_script.sh
-CMD ./wrapper_script.sh
+CMD ["python3", "-u", "main.py"]
+# COPY wrapper_script.sh wrapper_script.sh
+# RUN chmod +x wrapper_script.sh
+# CMD ./wrapper_script.sh
