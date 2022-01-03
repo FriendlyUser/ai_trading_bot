@@ -45,6 +45,7 @@ def RunFuncAndHandleException(func):
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
             func_name = func.__name__
             message = f"[HandleException][{func_name}]"
+            print(e)
             self._logger.warning(message, {
                 "error": str(e),
                 "type": str(exc_type),

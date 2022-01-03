@@ -20,7 +20,7 @@ class TradingSystem:
         self._yahoo_repository = yahoo_repository
         self._ai_repository = ai_repository
         self._alpaca_repository = alpaca_repository
-        self._stocks = ["APPL"]
+        self._stocks = ["AAPL"]
         self._ta_repository = ta_repository
         self._event_system = EventSystem(logger, config, yahoo_repository, ai_repository, alpaca_repository, ta_repository)
 
@@ -44,31 +44,7 @@ class TradingSystem:
         # scanning S&P 500
         # change configuration to run different analysis based on config
         for stock in self._stocks:
-            APPLE_DATA = self._alpaca_repository.get_barset(stock, 'day', limit=100).df
-            APPLE_DATA['20_SMA'] = APPLE_DATA['close'].rolling(window=20, min_periods=1).mean()
-            APPLE_DATA['10_SMA'] = APPLE_DATA['close'].rolling(window=10, min_periods=1).mean()
-            APPLE_DATA['Cross'] = 0.0
-            APPLE_DATA['Cross'] = np.where(APPLE_DATA['10_SMA'] > APPLE_DATA['20_SMA'], 1.0, 0.0)
-            APPLE_DATA['Signal'] = APPLE_DATA['Cross'].diff()
-            map_dict = {-1.0: 'sell', 1.0: 'buy', 0.0: 'none'}
-            APPLE_DATA["Signal"] = APPLE_DATA["Signal"].map(map_dict)
-            # get last 5 entries in apple data df
-            last_5_entries = APPLE_DATA.tail(5)
-            # check if signal has buy or sell
-            if "buy" in last_5_entries['Signal'].values:
-                # buy stock
-                self._logger.info("[handle_trading][buy]")
-                await self._alpaca_repository.buy_sell_stock("buy", stock, 10)
-                self._logger.sell(f"{stock} - {10}", {
-                    "price": f"{last_5_entries['close'].values[-1]}",
-                })
-
-            if "sell" in last_5_entries['Signal'].values:
-                self._logger.info("[handle_trading][buy]")
-                await self._alpaca_repository.buy_sell_stock("sell", stock, 10)
-                self._logger.sell(f"{stock} - {10}", {
-                    "price": f"{last_5_entries['close'].values[-1]}",
-                })
+            self.simpleSMA(stock)
 
         # forecasting stonk price
         # for stock in self._stocks:
@@ -102,3 +78,32 @@ class TradingSystem:
             pass
         pass
 
+    # TODO move this into a "strategy folder that I can import as I desire"
+    async def simpleSMA(self, stock):
+        APPLE_DF = self._alpaca_repository.get_barset(stock, '15Min', limit=100).df
+        APPLE_DATA = APPLE_DF[stock]
+        APPLE_DATA.is_copy = False
+        APPLE_DATA['20_SMA'] = APPLE_DATA['close'].rolling(window=20, min_periods=1).mean()
+        APPLE_DATA['10_SMA'] = APPLE_DATA['close'].rolling(window=10, min_periods=1).mean()
+        APPLE_DATA['Cross'] = 0.0
+        APPLE_DATA['Cross'] = np.where(APPLE_DATA['10_SMA'] > APPLE_DATA['20_SMA'], 1.0, 0.0)
+        APPLE_DATA['Signal'] = APPLE_DATA['Cross'].diff()
+        map_dict = {-1.0: 'sell', 1.0: 'buy', 0.0: 'none'}
+        APPLE_DATA["Signal"] = APPLE_DATA["Signal"].map(map_dict)
+        # get last 5 entries in apple data df
+        last_5_entries = APPLE_DATA.tail(15)
+        # check if signal has buy or sell
+        if "buy" in last_5_entries['Signal'].values:
+            # buy stock
+            self._logger.info("[handle_trading][buy]")
+            await self._alpaca_repository.buy_sell_stock("buy", stock, 10)
+            self._logger.sell(f"{stock} - {10}", {
+                "price": f"{last_5_entries['close'].values[-1]}",
+            })
+
+        if "sell" in last_5_entries['Signal'].values:
+            self._logger.info("[handle_trading][buy]")
+            await self._alpaca_repository.buy_sell_stock("sell", stock, 10)
+            self._logger.sell(f"{stock} - {10}", {
+                "price": f"{last_5_entries['close'].values[-1]}",
+            })
