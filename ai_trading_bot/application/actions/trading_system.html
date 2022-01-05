@@ -179,6 +179,27 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">sell</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stock</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="mi">10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">{</span>
                 <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">last_5_entries</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">})</span>
+
+        <span class="c1"># Plot stock price data</span>
+        <span class="n">APPLE_DATA</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;20_SMA&quot;</span><span class="p">,</span> <span class="s2">&quot;10_SMA&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Plot ‘buy’ signals</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;buy&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+                <span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;20_SMA&#39;</span><span class="p">][</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;buy&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;buy&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Plot ‘sell’ signals</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sell&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+                <span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;20_SMA&#39;</span><span class="p">][</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sell&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sell&#39;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Apple Close Price ($)&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+        <span class="n">plt_data</span> <span class="o">=</span> <span class="n">fig_to_buffer</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">send_image</span><span class="p">(</span><span class="n">plt_data</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -294,6 +315,27 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">sell</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stock</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="mi">10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">{</span>
                 <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">last_5_entries</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">})</span>
+
+        <span class="c1"># Plot stock price data</span>
+        <span class="n">APPLE_DATA</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;20_SMA&quot;</span><span class="p">,</span> <span class="s2">&quot;10_SMA&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Plot ‘buy’ signals</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;buy&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+                <span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;20_SMA&#39;</span><span class="p">][</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;buy&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;buy&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Plot ‘sell’ signals</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sell&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+                <span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;20_SMA&#39;</span><span class="p">][</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sell&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sell&#39;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Apple Close Price ($)&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+        <span class="n">plt_data</span> <span class="o">=</span> <span class="n">fig_to_buffer</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">send_image</span><span class="p">(</span><span class="n">plt_data</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -461,6 +503,27 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">sell</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stock</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="mi">10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">{</span>
                 <span class="s2">&quot;price&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">last_5_entries</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">})</span>
+
+        <span class="c1"># Plot stock price data</span>
+        <span class="n">APPLE_DATA</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="s2">&quot;20_SMA&quot;</span><span class="p">,</span> <span class="s2">&quot;10_SMA&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Plot ‘buy’ signals</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;buy&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+                <span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;20_SMA&#39;</span><span class="p">][</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;buy&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;buy&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Plot ‘sell’ signals</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sell&#39;</span><span class="p">][</span><span class="s1">&#39;time&#39;</span><span class="p">],</span>
+                <span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;20_SMA&#39;</span><span class="p">][</span><span class="n">APPLE_DATA</span><span class="p">[</span><span class="s1">&#39;Signal&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sell&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;sell&#39;</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Apple Close Price ($)&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+        <span class="n">plt_data</span> <span class="o">=</span> <span class="n">fig_to_buffer</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">send_image</span><span class="p">(</span><span class="n">plt_data</span><span class="p">)</span>
 </pre></div>
 
         </details>
