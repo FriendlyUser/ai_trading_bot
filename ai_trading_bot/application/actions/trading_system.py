@@ -107,3 +107,24 @@ class TradingSystem:
             self._logger.sell(f"{stock} - {10}", {
                 "price": f"{last_5_entries['close'].values[-1]}",
             })
+
+        # Plot stock price data
+        APPLE_DATA.plot(x="time", y=["close", "20_SMA", "10_SMA"], color=['k', 'b', 'm'])
+
+        # Plot ‘buy’ signals
+        plt.plot(APPLE_DATA[APPLE_DATA['Signal'] == 'buy']['time'],
+                APPLE_DATA['20_SMA'][APPLE_DATA['Signal'] == 'buy'],
+                '^', markersize=8, color='g', label='buy')
+
+        # Plot ‘sell’ signals
+        plt.plot(APPLE_DATA[APPLE_DATA['Signal'] == 'sell']['time'],
+                APPLE_DATA['20_SMA'][APPLE_DATA['Signal'] == 'sell'],
+                'v', markersize=8, color='r', label='sell')
+
+        plt.xlabel("Date")
+        plt.ylabel("Apple Close Price ($)")
+        plt.legend()
+        fig = plt.gcf()
+        plt_data = fig_to_buffer(fig)
+        fig.clear()
+        send_image(plt_data)
