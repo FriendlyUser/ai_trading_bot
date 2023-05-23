@@ -4,7 +4,7 @@ statsmodels==0.12.1
 pyotp==2.4.1 
 matplotlib==3.3.3
 alpaca-trade-api==0.51.0
-requests==2.25.1
+requests==2.31.0
 Flask==1.1.2
 git+https://github.com/twopirllc/pandas-ta.git@main
 yfinance==0.1.63
